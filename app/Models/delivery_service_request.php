@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class service extends Model
+class delivery_service_request extends Model
 {
     use HasFactory;
 
-    public function categorie()
-    {
-        return $this->belongsTo(categorie::class);
-    }
+    
 }

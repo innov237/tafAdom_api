@@ -15,12 +15,11 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_categorie');
-            $table->string('libelle_service');
-            $table->string('description_service');
-            $table->string('icon_categorie');
-            $table->string('img_categorie');
-            $table->foreign('id_categorie')->references('id')->on('categories');
+            $table->string("name");
+            $table->string("icon");
+            $table->string("image");
+            $table->BigInteger('categorie_id')->unsigned();
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
