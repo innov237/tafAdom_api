@@ -29,7 +29,7 @@ class DeliveryServiceRequestController extends Controller
         $deliverySR = new delivery_service_request;
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
-        $deliverySR->delivery_address_id = 1;
+        $deliverySR->delivery_address_id = $request->delivery_address_id;
         $deliverySR->save();
     }
 
@@ -56,7 +56,7 @@ class DeliveryServiceRequestController extends Controller
         $deliverySR = delivery_service_request::find($id);
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
-        $deliverySR->delivery_address_id = 1;
+        $deliverySR->delivery_address_id = $request->delivery_address_id;
         $deliverySR->save();
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);

@@ -31,7 +31,7 @@ class ServiceRequestController extends Controller
         $service_r->data_solicition = $request->data_solicition ;
         $service_r->provider_id = $request->provider_id;
         $service_r->time_solicitation = $request->time_solicitation;
-        $service_r->delivery_request_price_id = 1;
+        $service_r->delivery_request_price_id = $request->delivery_request_price_id;
         $service_r->save();
 
     }
@@ -60,7 +60,7 @@ class ServiceRequestController extends Controller
         $service_r->data_solicition = $request->data_solicition ;
         $service_r->provider_id = $request->provider_id;
         $service_r->time_solicitation = $request->time_solicitation;
-        $service_r->delivery_request_price_id = 1;
+        $service_r->delivery_request_price_id = $request->delivery_request_price_id;
         $service_r->save();
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);

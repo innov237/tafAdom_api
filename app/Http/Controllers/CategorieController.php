@@ -6,6 +6,16 @@ use App\Models\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
+    /**
+    *openapi: 3.0.0
+*info:
+  *title: Sample API
+  *description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  *version: 0.1.9
+ */
+
+
 class CategorieController extends Controller
 {
     /**
@@ -28,9 +38,24 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         $categorie = new categorie;
+
+        if($request->file('image')){
+            $file = $request->file('image');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('images/',$filename);
+            $service->image = $filename;
+        }
+
+        if($request->file('icon')){
+            $file = $request->file('icon');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('icons/',$filename);
+            $service->icon = $filename;
+        }
+
         $categorie->name = $request->name;
-        $categorie->icon = $request->icon;
-        $categorie->image = $request->image;
+        // $categorie->icon = $request->icon;
+        // $categorie->image = $request->image;
         $categorie->save();
 
         return response()->jSon( [ 'success'=>'categorie enregistré avec succes'],200);
@@ -57,10 +82,25 @@ class CategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if($request->file('image')){
+            $file = $request->file('image');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('images/',$filename);
+            $service->image = $filename;
+        }
+
+        if($request->file('icon')){
+            $file = $request->file('icon');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('icons/',$filename);
+            $service->icon = $filename;
+        }
+
         $categorie = categorie::find($id);
         $categorie->name = $request->name;
-        $categorie->icon = $request->icon;
-        $categorie->image = $request->image;
+        //$categorie->icon = $request->icon;
+        //$categorie->image = $request->image;
         $categorie->save();
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);

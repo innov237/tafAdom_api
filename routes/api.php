@@ -40,7 +40,6 @@ Route::group([
     Route::get('/user-profile', [AuthController::class, 'userProfile']);    
 });
 
-
 Route::apiResource('categorie',CategorieController::class);
 Route::apiResource('service',ServiceController::class);
 Route::apiResource('serviceRequest',ServiceRequestController::class);

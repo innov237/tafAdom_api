@@ -30,7 +30,7 @@ class DiscountedServiceController extends Controller
         $discounted_service->start_date = $request->start_date;
         $discounted_service->start_date = $request->start_date;
         $discounted_service->reduction = $request->reduction;
-        $discounted_service->service_id =1;
+        $discounted_service->service_id = $request->service_id;
         $discounted_service->save();
 
         return response()->jSon( [ 'success'=>'promotion enregistrée avec succes'],200);
@@ -60,7 +60,7 @@ class DiscountedServiceController extends Controller
         $discounted_service->start_date = $request->start_date;
         $discounted_service->start_date = $request->start_date;
         $discounted_service->reduction = $request->reduction;
-        $discounted_service->service_id =1;
+        $discounted_service->service_id = $request->service_id;
         $discounted_service->save();
 
         return response()->jSon( [ 'success'=>'modication enregistrée avec succes'],200);
@@ -74,6 +74,7 @@ class DiscountedServiceController extends Controller
      */
     public function destroy(discounted_service $discounted_service)
     {
-        //
+        discounted_service::where('id',$discounted_service->id)->delete();
+        return response()->json(['succes'=>'suppression effectuée avec succes'], 200);
     }
 }

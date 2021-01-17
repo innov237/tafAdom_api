@@ -27,8 +27,10 @@ class DeliveryAddress extends Controller
     public function store(Request $request)
     {
         $delivery_address = new delivery_address;
-        $delivery_address->amout = $request->amout;
-        $categorie->status = $request->status;
+        $delivery_address->quater= $request->quater;
+        $delivery_address->phone_number = $request->phone_number;
+        $delivery_address->user_id = $request->user_id;
+        $delivery_address->city_id= $request->city_id;
         $delivery_address->save();
 
         return response()->jSon( [ 'success'=>'addresse de livraison enregistré avec succes'],200);
@@ -55,8 +57,10 @@ class DeliveryAddress extends Controller
     public function update(Request $request,$id)
     {
         $delivery_address = delivery_address::find($id);
-        $delivery_address->amout = $request->amout;
-        $categorie->status = $request->status;
+        $delivery_address->quater= $request->quater;
+        $delivery_address->phone_number = $request->phone_number;
+        $delivery_address->user_id = $request->user_id;
+        $delivery_address->city_id= $request->city_id;
         $delivery_address->save();
 
         return response()->jSon( [ 'success'=>'addresse de livraison enregistré avec succes'],200);
@@ -70,6 +74,7 @@ class DeliveryAddress extends Controller
      */
     public function destroy(delivery_address $delivery_address)
     {
-        //
+        delivery_address::where('id',$delivery_address->id)->delete();
+        return response()->json(['succes'=>'suppression effectuée avec succes'], 200);
     }
 }

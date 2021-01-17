@@ -29,11 +29,26 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $service = new service;
+
+        if($request->file('image')){
+            $file = $request->file('image');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('images/',$filename);
+            $service->image = $filename;
+        }
+
+        if($request->file('icon')){
+            $file = $request->file('icon');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('icons/',$filename);
+            $service->icon = $filename;
+        }
+
         $service->name = $request->name;
-        $service->icon = $request->icon;
-        $service->image = $request->image;
-        $service->service_request_id = 1;
-        $service->categorie_id = 2;
+        //$service->icon = $request->icon;
+       //$service->image = $request->image;
+        $service->service_request_id = $request->service_request_id;
+        $service->categorie_id = $request->categorie_id;
         $service->save();
 
         return response()->jSon( [ 'success'=>'service enregistré avec succes'],200);
@@ -61,11 +76,26 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
         $service = service::find($id);
+
+        if($request->file('image')){
+            $file = $request->file('image');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('images/',$filename);
+            $service->image = $filename;
+        }
+
+        if($request->file('icon')){
+            $file = $request->file('icon');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $request->file->move('icons/',$filename);
+            $service->icon = $filename;
+        }
+        
         $service->name = $request->name;
-        $service->icon = $request->icon;
-        $service->image = $request->image;
-        $service->service_request_id = 2;
-        $service->categorie_id = 2;
+        // $service->icon = $request->icon;
+        // $service->image = $request->image;
+        $service->service_request_id = $request->service_request_id;
+        $service->categorie_id = $request->categorie_id;;
         $service->save();
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
