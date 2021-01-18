@@ -7,15 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
-    /**
-    *openapi: 3.0.0
-*info:
-  *title: Sample API
-  *description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
-  *version: 0.1.9
- */
-
-
 class CategorieController extends Controller
 {
     /**
@@ -25,6 +16,14 @@ class CategorieController extends Controller
      */
     public function index()
     {
+        /**
+ * @OA\Get(
+ *     path="/api/categorie",
+ *     description="Home page",
+ *     @OA\Response(response="default", description="Welcome page")
+ * )
+ */
+
         $categorie = categorie::with(['service'])->get();
         return  $categorie->toJson(JSON_PRETTY_PRINT);
     }
@@ -37,6 +36,14 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
+               /**
+ * @OA\Post(
+ *     path="/api/categorie",
+ *     description="Home page",
+ *     @OA\Response(response="default", description="Welcome page")
+ * )
+ */
+
         $categorie = new categorie;
 
         if($request->file('image')){
