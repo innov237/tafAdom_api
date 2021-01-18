@@ -7,18 +7,953 @@
     "paths": {
         "/api/categorie": {
             "get": {
-                "description": "Home page",
+                "tags": [
+                    "categories"
+                ],
+                "summary": "return a list of categories",
+                "description": "list of categories",
                 "responses": {
-                    "default": {
-                        "description": "Welcome page"
+                    "200": {
+                        "description": "a json array of categories"
                     }
                 }
             },
             "post": {
-                "description": "Home page",
+                "tags": [
+                    "categories"
+                ],
+                "summary": "create user",
+                "description": "Get all request that have been send to a category",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "category name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "icon",
+                        "in": "query",
+                        "description": "category icon ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "catgory image",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
-                    "default": {
-                        "description": "Welcome page"
+                    "201": {
+                        "description": "created"
+                    }
+                }
+            }
+        },
+        "/api/categorie/{categorie} ": {
+            "delete": {
+                "tags": [
+                    "categories"
+                ],
+                "summary": "delete category by id user ",
+                "description": "delete a category",
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "categories"
+                ],
+                "summary": "update category ",
+                "description": "Get all request that have been send to a category",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "catgory image",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "icon",
+                        "in": "query",
+                        "description": "icon",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated"
+                    }
+                }
+            }
+        },
+        "/api/city": {
+            "get": {
+                "tags": [
+                    "cities"
+                ],
+                "summary": "return a list of cities",
+                "description": "list of cities",
+                "responses": {
+                    "200": {
+                        "description": "a json array of cities"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "cities"
+                ],
+                "summary": "create city",
+                "description": "Get all request that have been send to a city",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "city name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created"
+                    }
+                }
+            }
+        },
+        "/api/city/{city} ": {
+            "patch": {
+                "tags": [
+                    "cities"
+                ],
+                "summary": "update city ",
+                "description": "Get all request that have been send to a city",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated"
+                    }
+                }
+            }
+        },
+        "/api/city/{categorie} ": {
+            "delete": {
+                "tags": [
+                    "cities"
+                ],
+                "summary": "delete city by id city ",
+                "description": "delete a city",
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            }
+        },
+        "/api/deliveryAddress ": {
+            "get": {
+                "tags": [
+                    "delivery Address"
+                ],
+                "summary": "return a list of cities",
+                "description": "list of delivery Address",
+                "responses": {
+                    "200": {
+                        "description": "a json array of delivery Address"
+                    }
+                }
+            }
+        },
+        "/api/deliveryAddress": {
+            "post": {
+                "tags": [
+                    "delivery Address"
+                ],
+                "summary": "create delivery Address",
+                "description": "Get all request that have been send to a delivery Address",
+                "parameters": [
+                    {
+                        "name": "quater",
+                        "in": "query",
+                        "description": "quater ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "query",
+                        "description": "phone number ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "id of user",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "city_id",
+                        "in": "query",
+                        "description": "id of city",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created"
+                    }
+                }
+            }
+        },
+        "/api/deliveryAddress/{deliveryAddress} ": {
+            "delete": {
+                "tags": [
+                    "delivery Address"
+                ],
+                "summary": "delete delivery Address by id delivery Address ",
+                "description": "delete a delivery Address",
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "delivery Address"
+                ],
+                "summary": "update delivery Address ",
+                "description": "Get all request that have been send to a delivery Address",
+                "parameters": [
+                    {
+                        "name": "quater",
+                        "in": "query",
+                        "description": "quater ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "query",
+                        "description": "phone number ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "id of user",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    },
+                    {
+                        "name": "city_id",
+                        "in": "query",
+                        "description": "id of city",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated"
+                    }
+                }
+            }
+        },
+        "/api/deliveryServiceRequest": {
+            "get": {
+                "tags": [
+                    "delivery Service Request"
+                ],
+                "summary": "return a list of delivery Service Request",
+                "description": "list of delivery Service Request",
+                "responses": {
+                    "200": {
+                        "description": "a json array of delivery Service Request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "delivery Service Request"
+                ],
+                "summary": "create delivery Service Request",
+                "description": "Get all request that have been send to a  delivery Service Request",
+                "parameters": [
+                    {
+                        "name": "amout",
+                        "in": "query",
+                        "description": "amout",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "decimal"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "delivery_address_id",
+                        "in": "query",
+                        "description": "delivery address id",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created"
+                    }
+                }
+            }
+        },
+        "/api/deliveryServiceRequest/{deliveryServiceRequest} ": {
+            "delete": {
+                "tags": [
+                    "delivery Service Request"
+                ],
+                "summary": "delete delivery Service Request by id",
+                "description": "delete adelivery Service Request",
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "delivery Service Request"
+                ],
+                "summary": "update delivery Service Request",
+                "description": "Get all request that have been send to a delivery Service Request",
+                "parameters": [
+                    {
+                        "name": "amout",
+                        "in": "query",
+                        "description": "amout",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "decimal"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "delivery_address_id",
+                        "in": "query",
+                        "description": "delivery address id",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated"
+                    }
+                }
+            }
+        },
+        "/api/discounted": {
+            "get": {
+                "tags": [
+                    "discounted service"
+                ],
+                "summary": "return a list of discounted service",
+                "description": "list of discounted service",
+                "responses": {
+                    "200": {
+                        "description": "a json array of discounted service"
+                    }
+                }
+            }
+        },
+        "api/discounted": {
+            "post": {
+                "tags": [
+                    "discounted service"
+                ],
+                "summary": "create discounted service",
+                "description": "Get all request that have been send to a discounted service",
+                "parameters": [
+                    {
+                        "name": "started_date",
+                        "in": "query",
+                        "description": "quater ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "end date",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "reduction",
+                        "in": "query",
+                        "description": "id of user",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "decimal"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "description": "id of city",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created"
+                    }
+                }
+            }
+        },
+        "api/discounted/{discounted}": {
+            "patch": {
+                "tags": [
+                    "discounted service"
+                ],
+                "summary": "update discounted ",
+                "description": "Get all request that have been send to a discounted service",
+                "parameters": [
+                    {
+                        "name": "started_date",
+                        "in": "query",
+                        "description": "quater ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "end date",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "reduction",
+                        "in": "query",
+                        "description": "id of user",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "deciamal"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "description": "id of city",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated"
+                    }
+                }
+            }
+        },
+        "/api/discounted/{discounted}": {
+            "delete": {
+                "tags": [
+                    "discounted service"
+                ],
+                "summary": "delete discount service by id",
+                "description": "delete discount service",
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            }
+        },
+        "/api/provider": {
+            "get": {
+                "tags": [
+                    "provider"
+                ],
+                "summary": "return a list of provider",
+                "description": "list of provider",
+                "responses": {
+                    "200": {
+                        "description": "a json array of provider"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "provider"
+                ],
+                "summary": "create provider",
+                "description": "Get all request that have been send to a provider",
+                "parameters": [
+                    {
+                        "name": "phone_number",
+                        "in": "query",
+                        "description": "end date",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "id of provider",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created"
+                    }
+                }
+            }
+        },
+        "/api/provider{provider}": {
+            "delete": {
+                "tags": [
+                    "provider"
+                ],
+                "summary": "delete provider by id",
+                "description": "delete provider",
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "provider"
+                ],
+                "summary": "update provider ",
+                "description": "Get all request that have been send to a provider",
+                "parameters": [
+                    {
+                        "name": "phone_number",
+                        "in": "query",
+                        "description": "end date",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "id of provider",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated"
+                    }
+                }
+            }
+        },
+        "/api/service": {
+            "get": {
+                "tags": [
+                    "service"
+                ],
+                "summary": "return a list of services",
+                "description": "list of services",
+                "responses": {
+                    "200": {
+                        "description": "a json array of services"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "service"
+                ],
+                "summary": "create service",
+                "description": "Get all request that have been send to a service",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "service name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "catgory image",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "icon",
+                        "in": "query",
+                        "description": "icon",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created"
+                    }
+                }
+            }
+        },
+        "/api/service/{service} ": {
+            "delete": {
+                "tags": [
+                    "service"
+                ],
+                "summary": "delete category by id user ",
+                "description": "delete a service",
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "service"
+                ],
+                "summary": "update service ",
+                "description": "Get all request that have been send to a service",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "catgory image",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "icon",
+                        "in": "query",
+                        "description": "icon",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated"
+                    }
+                }
+            }
+        },
+        "/api/serviceRequest": {
+            "get": {
+                "tags": [
+                    "service Request"
+                ],
+                "summary": "return a list of service Request",
+                "description": "list of service Request",
+                "responses": {
+                    "200": {
+                        "description": "a json array of service Request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "service Request"
+                ],
+                "summary": "create service Request",
+                "description": "Get all request that have been send to a service Request",
+                "parameters": [
+                    {
+                        "name": "data_solicition",
+                        "in": "query",
+                        "description": "data solicition ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "end date",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "provider_id",
+                        "in": "query",
+                        "description": "id of provider",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    },
+                    {
+                        "name": "delivery_request_price_id",
+                        "in": "query",
+                        "description": "id of delivery requestprice",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created"
+                    }
+                }
+            }
+        },
+        "/api/serviceRequest/{serviceRequest} ": {
+            "delete": {
+                "tags": [
+                    "service Request"
+                ],
+                "summary": "delete delivery Service Request by id",
+                "description": "delete Service Request",
+                "responses": {
+                    "200": {
+                        "description": "deleted"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "service Request"
+                ],
+                "summary": "update service Request ",
+                "description": "Get all request that have been send to a service",
+                "parameters": [
+                    {
+                        "name": "data_solicition",
+                        "in": "query",
+                        "description": "data solicition ",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "end date",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "provider_id",
+                        "in": "query",
+                        "description": "id of provider",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    },
+                    {
+                        "name": "delivery_request_price_id",
+                        "in": "query",
+                        "description": "id of delivery request price",
+                        "required": true,
+                        "style": "form",
+                        "schema": {
+                            "type": "BigInteger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated"
                     }
                 }
             }

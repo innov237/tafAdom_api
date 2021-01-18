@@ -15,6 +15,19 @@ class ProviderController extends Controller
      */
     public function index()
     {
+/**
+ * @OA\Get(
+ *     path="/api/provider",
+ *     tags={"provider"},
+ *     summary="return a list of provider",
+ *     description="list of provider",
+ *     @OA\Response(response="200",
+ *       description="a json array of provider"),
+ *     @OA\Schema(type="json", items="string"),
+ *     
+ * )
+ */
+
         $provider = DB::table('providers')->get();
         return  $provider->toJson(JSON_PRETTY_PRINT);
     }
@@ -27,6 +40,54 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
+
+/**
+     * @OA\Post(
+     *   path="/api/provider",
+     *   tags={"provider"},
+     *   summary="create provider",
+     *   description="Get all request that have been send to a provider",
+     * 
+     *    @OA\Parameter(
+     *         name="phone_number",
+     *         in="query",
+     *         description="end date",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     *    @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="id of provider",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     * *    @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="name",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     * 
+     *     @OA\Response(
+     *     response=201,
+     *     description="created",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
         $provider = new provider;
         $provider->name = $request->name;
         $provider->email = $request->email;
@@ -54,6 +115,54 @@ class ProviderController extends Controller
      */
     public function update(Request $request,$id)
     {
+/**
+     * @OA\Patch(
+     *   path="/api/provider{provider}",
+     *   summary="update provider ",
+     *   tags={"provider"},
+     *   description="Get all request that have been send to a provider",
+     * 
+     *    @OA\Parameter(
+     *         name="phone_number",
+     *         in="query",
+     *         description="end date",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     *    @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="id of provider",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     * *    @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="name",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     * 
+     *     
+     *     @OA\Response(
+     *     response=201,
+     *     description="updated",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
         $provider = provider::find($id);
         $provider->name = $request->name;
         $provider->email = $request->email;
@@ -71,6 +180,22 @@ class ProviderController extends Controller
      */
     public function destroy(provider $provider)
     {
+ /**
+     * @OA\Delete(
+     *   path="/api/provider{provider}",
+     *   summary="delete provider by id",
+     *   tags={"provider"},
+     *   description="delete provider",
+     *     
+     *     @OA\Response(
+     *     response=200,
+     *     description="deleted",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
         provider::where('id',$provider->id)->delete();
         return response()->json(['succes'=>'suppression effectuée avec succes'], 200);
     }

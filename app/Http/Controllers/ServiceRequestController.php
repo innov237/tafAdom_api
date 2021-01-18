@@ -14,6 +14,19 @@ class ServiceRequestController extends Controller
      */
     public function index()
     {
+                /**
+ * @OA\Get(
+ *     path="/api/serviceRequest",
+ *     tags={"service Request"},
+ *     summary="return a list of service Request",
+ *     description="list of service Request",
+ *     @OA\Response(response="200",
+ *       description="a json array of service Request"),
+ *     @OA\Schema(type="json", items="string"),
+ *     
+ * )
+ */
+
         $sr = service_request::with(['serviceUser'])->get();
         return  $sr->toJson(JSON_PRETTY_PRINT);
     }
@@ -27,6 +40,64 @@ class ServiceRequestController extends Controller
      */
     public function store(Request $request)
     {
+/**
+     * @OA\Post(
+     *   path="/api/serviceRequest",
+     *   tags={"service Request"},
+     *   summary="create service Request",
+     *   description="Get all request that have been send to a service Request",
+
+
+      *    @OA\Parameter(
+     *         name="data_solicition",
+     *         in="query",
+     *         description="data solicition ",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="date"
+     *         ),
+     *         style="form"
+     *     ),
+     *    @OA\Parameter(
+     *         name="end_date",
+     *         in="query",
+     *         description="end date",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="date"
+     *         ),
+     *         style="form"
+     *     ),
+     *    @OA\Parameter(
+     *         name="provider_id",
+     *         in="query",
+     *         description="id of provider",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="BigInteger"
+     *         ),
+     *         style="form"
+     *     ),
+     * *    @OA\Parameter(
+     *         name="delivery_request_price_id",
+     *         in="query",
+     *         description="id of delivery requestprice",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="BigInteger"
+     *         ),
+     *         style="form"
+     *     ),
+     * 
+     *     @OA\Response(
+     *     response=201,
+     *     description="created",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
         $service_r = new service_request;
         $service_r->data_solicition = $request->data_solicition ;
         $service_r->provider_id = $request->provider_id;
@@ -56,6 +127,64 @@ class ServiceRequestController extends Controller
      */
     public function update(Request $request,$id, service_r_request $service_r_request)
     {
+
+    /**
+     * @OA\Patch(
+     *   path="/api/serviceRequest/{serviceRequest} ",
+     *   summary="update service Request ",
+     *    tags={"service Request"},
+     *   description="Get all request that have been send to a service",
+     * 
+      *    @OA\Parameter(
+     *         name="data_solicition",
+     *         in="query",
+     *         description="data solicition ",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="date"
+     *         ),
+     *         style="form"
+     *     ),
+     *    @OA\Parameter(
+     *         name="end_date",
+     *         in="query",
+     *         description="end date",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="date"
+     *         ),
+     *         style="form"
+     *     ),
+     *    @OA\Parameter(
+     *         name="provider_id",
+     *         in="query",
+     *         description="id of provider",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="BigInteger"
+     *         ),
+     *         style="form"
+     *     ),
+     * *    @OA\Parameter(
+     *         name="delivery_request_price_id",
+     *         in="query",
+     *         description="id of delivery request price",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="BigInteger"
+     *         ),
+     *         style="form"
+     *     ),
+     *     
+     *     @OA\Response(
+     *     response=201,
+     *     description="updated",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
         $service_r = service_request::find($id);
         $service_r->data_solicition = $request->data_solicition ;
         $service_r->provider_id = $request->provider_id;
@@ -74,6 +203,21 @@ class ServiceRequestController extends Controller
      */
     public function destroy(service_r_request $service_r_request)
     {
+
+    /**
+     * @OA\Delete(
+     *   path="/api/serviceRequest/{serviceRequest} ",
+     *   summary="delete delivery Service Request by id",
+     *   tags={"service Request"},
+     *   description="delete Service Request",
+     *     
+     *     @OA\Response(
+     *     response=200,
+     *     description="deleted",
+     *     @OA\Schema(type="json"),
+     *   ),
+     * )
+     */
         ServiceRequest::where('id',$service_r->id)->delete();
         return response()->json(['succes'=>'suppression effectuée avec succes'], 200);
     }

@@ -14,6 +14,19 @@ class DeliveryServiceRequestController extends Controller
      */
     public function index()
     {
+/**
+ * @OA\Get(
+ *     path="/api/deliveryServiceRequest",
+ *     tags={"delivery Service Request"},
+ *     summary="return a list of delivery Service Request",
+ *     description="list of delivery Service Request",
+ *     @OA\Response(response="200",
+ *       description="a json array of delivery Service Request"),
+ *     @OA\Schema(type="json", items="string"),
+ *     
+ * )
+ */
+
         $deliverySR = DB::table('delivery_service_requests')->get();
         return  $service->toJson(JSON_PRETTY_PRINT);
     }
@@ -26,6 +39,56 @@ class DeliveryServiceRequestController extends Controller
      */
     public function store(Request $request)
     {
+ /**
+     * @OA\Post(
+     *   path="/api/deliveryServiceRequest",
+     *   tags={"delivery Service Request"},
+     *   summary="create delivery Service Request",
+     *   description="Get all request that have been send to a  delivery Service Request",
+     * 
+*         @OA\Parameter(
+     *         name="amout",
+     *         in="query",
+     *         description="amout",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="decimal"
+     *         ),
+     *         style="form"
+     *     ),
+
+  *            @OA\Parameter(
+     *         name="status",
+     *         in="query",
+     *         description="status",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     * *            @OA\Parameter(
+     *         name="delivery_address_id",
+     *         in="query",
+     *         description="delivery address id",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="BigInteger"
+     *         ),
+     *         style="form"
+     *     ),  
+     *     
+     * 
+     *     @OA\Response(
+     *     response=201,
+     *     description="created",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
+
         $deliverySR = new delivery_service_request;
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
@@ -53,6 +116,56 @@ class DeliveryServiceRequestController extends Controller
      */
     public function update(Request $request,$id, delivery_service_request $delivery_service_request)
     {
+
+  /**
+     * @OA\Patch(
+     *   path="/api/deliveryServiceRequest/{deliveryServiceRequest} ",
+     *   summary="update delivery Service Request",
+     *    tags={"delivery Service Request"},
+     *   description="Get all request that have been send to a delivery Service Request",
+     * 
+     *         @OA\Parameter(
+     *         name="amout",
+     *         in="query",
+     *         description="amout",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="decimal"
+     *         ),
+     *         style="form"
+     *     ),
+
+  *            @OA\Parameter(
+     *         name="status",
+     *         in="query",
+     *         description="status",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     * *            @OA\Parameter(
+     *         name="delivery_address_id",
+     *         in="query",
+     *         description="delivery address id",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="BigInteger"
+     *         ),
+     *         style="form"
+     *     ),  
+     *     
+     *     @OA\Response(
+     *     response=201,
+     *     description="updated",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
+
         $deliverySR = delivery_service_request::find($id);
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
@@ -70,6 +183,23 @@ class DeliveryServiceRequestController extends Controller
      */
     public function destroy(delivery_service_request $delivery_service_request)
     {
+ /**
+     * @OA\Delete(
+     *   path="/api/deliveryServiceRequest/{deliveryServiceRequest} ",
+     *   summary="delete delivery Service Request by id",
+     *   tags={"delivery Service Request"},
+     *   description="delete adelivery Service Request",
+     *     
+     *     @OA\Response(
+     *     response=200,
+     *     description="deleted",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
+
         delivery_service_request::where('id',$delivery_service_request->id)->delete();
         return response()->json(['succes'=>'suppression effectuée avec succes'], 200);
     }

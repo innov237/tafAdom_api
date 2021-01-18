@@ -19,8 +19,13 @@ class CategorieController extends Controller
         /**
  * @OA\Get(
  *     path="/api/categorie",
- *     description="Home page",
- *     @OA\Response(response="default", description="Welcome page")
+ *     tags={"categories"},
+ *     summary="return a list of categories",
+ *     description="list of categories",
+ *     @OA\Response(response="200",
+ *       description="a json array of categories"),
+ *     @OA\Schema(type="json", items="string"),
+ *     
  * )
  */
 
@@ -36,13 +41,50 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-               /**
- * @OA\Post(
- *     path="/api/categorie",
- *     description="Home page",
- *     @OA\Response(response="default", description="Welcome page")
- * )
- */
+    /**
+     * @OA\Post(
+     *   path="/api/categorie",
+     *   tags={"categories"},
+     *   summary="create user",
+     *   description="Get all request that have been send to a category",
+
+  *    @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="category name",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         )
+     *     ),
+     *    @OA\Parameter(
+     *         name="icon",
+     *         in="query",
+     *         description="category icon ",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     *    @OA\Parameter(
+     *         name="image",
+     *         in="query",
+     *         description="catgory image",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     *     @OA\Response(
+     *     response=201,
+     *     description="created",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
 
         $categorie = new categorie;
 
@@ -65,7 +107,7 @@ class CategorieController extends Controller
         // $categorie->image = $request->image;
         $categorie->save();
 
-        return response()->jSon( [ 'success'=>'categorie enregistré avec succes'],200);
+        return response()->jSon( [ 'success'=>'created'],200);
     }
 
     /**
@@ -76,7 +118,7 @@ class CategorieController extends Controller
      */
     public function show(Categorie $categorie)
     {
-        //
+        
     }
 
 
@@ -89,6 +131,55 @@ class CategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+    /**
+     * @OA\Patch(
+     *   path="/api/categorie/{categorie} ",
+     *   summary="update category ",
+     *    tags={"categories"},
+     *   description="Get all request that have been send to a category",
+     * 
+     *         @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="name",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+
+  *            @OA\Parameter(
+     *         name="image",
+     *         in="query",
+     *         description="catgory image",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),
+     * *            @OA\Parameter(
+     *         name="icon",
+     *         in="query",
+     *         description="icon",
+     *         required=true,
+     *         @OA\Schema(
+     *         type="string"
+     *         ),
+     *         style="form"
+     *     ),  
+     *     
+     *     @OA\Response(
+     *     response=201,
+     *     description="updated",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
 
         if($request->file('image')){
             $file = $request->file('image');
@@ -121,6 +212,24 @@ class CategorieController extends Controller
      */
     public function destroy(Categorie $categorie)
     {
+
+
+   /**
+     * @OA\Delete(
+     *   path="/api/categorie/{categorie} ",
+     *   summary="delete category by id user ",
+     *   tags={"categories"},
+     *   description="delete a category",
+     *     
+     *     @OA\Response(
+     *     response=200,
+     *     description="deleted",
+     *     @OA\Schema(type="json"),
+     *
+     *   ),
+     * )
+     */
+
         categorie::where('id',$categorie->id)->delete();
         return response()->json(['succes'=>'suppression effectuée avec succes'], 200);
     }
