@@ -87,24 +87,19 @@ class CategorieController extends Controller
      */
 
         $categorie = new categorie;
+        $file = $request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        $img = 'image_'.$categorie->id.'.'.$extension;
+        Image::make($file)->save(public_path('/images/'.$img));
+        $categorie->image = $img;
 
-        if($request->file('image')){
-            $file = $request->file('image');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $request->file->move('images/',$filename);
-            $service->image = $filename;
-        }
-
-        if($request->file('icon')){
-            $file = $request->file('icon');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $request->file->move('icons/',$filename);
-            $service->icon = $filename;
-        }
+        $file = $request->file('icon');
+        $extension = $file->getClientOriginalExtension();
+        $icn = 'icon_'.$categorie->id.'.'.$extension;
+        Image::make($file)->save(public_path('/icons/'.$icn));
+        $categorie->icon = $icn; 
 
         $categorie->name = $request->name;
-        // $categorie->icon = $request->icon;
-        // $categorie->image = $request->image;
         $categorie->save();
 
         return response()->jSon( [ 'success'=>'created'],200);
@@ -185,14 +180,14 @@ class CategorieController extends Controller
             $file = $request->file('image');
             $filename = time().'.'.$file->getClientOriginalExtension();
             $request->file->move('images/',$filename);
-            $service->image = $filename;
+            $categorie->image = $filename;
         }
 
         if($request->file('icon')){
             $file = $request->file('icon');
             $filename = time().'.'.$file->getClientOriginalExtension();
             $request->file->move('icons/',$filename);
-            $service->icon = $filename;
+            $categorie->icon = $filename;
         }
 
         $categorie = categorie::find($id);

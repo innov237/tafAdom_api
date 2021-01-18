@@ -186,23 +186,19 @@ class ServiceController extends Controller
 
         $service = service::find($id);
 
-        if($request->file('image')){
-            $file = $request->file('image');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $request->file->move('images/',$filename);
-            $service->image = $filename;
-        }
+        $file = $request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        $img = 'image_'.$categorie->id.'.'.$extension;
+        Image::make($file)->save(public_path('/images/'.$img));
+        $categorie->image = $img;
 
-        if($request->file('icon')){
-            $file = $request->file('icon');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $request->file->move('icons/',$filename);
-            $service->icon = $filename;
-        }
-        
+        $file = $request->file('icon');
+        $extension = $file->getClientOriginalExtension();
+        $icn = 'icon_'.$categorie->id.'.'.$extension;
+        Image::make($file)->save(public_path('/icons/'.$icn));
+        $categorie->icon = $icn; 
         $service->name = $request->name;
-        // $service->icon = $request->icon;
-        // $service->image = $request->image;
+
         $service->service_request_id = $request->service_request_id;
         $service->categorie_id = $request->categorie_id;;
         $service->save();
