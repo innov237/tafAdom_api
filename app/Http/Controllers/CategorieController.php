@@ -176,24 +176,26 @@ class CategorieController extends Controller
      */
 
 
-        if($request->file('image')){
-            $file = $request->file('image');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $request->file->move('images/',$filename);
-            $categorie->image = $filename;
-        }
+    if($request->file('image')){
+        @unlink(public_path('/images/'.$categorie->image));
+        $file = $request->file('image');
+     $extension = $file->getClientOriginalExtension();
+     $img = 'image_'.$categorie->id.'.'.$extension;
+     Image::make($file)->save(public_path('/images/'.$img));
+     $categorie->image =  $img;
+   }
 
-        if($request->file('icon')){
-            $file = $request->file('icon');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $request->file->move('icons/',$filename);
-            $categorie->icon = $filename;
-        }
+   if($request->file('icon')){
+    @unlink(public_path('/icons/'.$categorie->icon));
+    $file = $request->file('icon');
+ $extension = $file->getClientOriginalExtension();
+ $icn = 'icon_'.$categorie->id.'.'.$extension;
+ Image::make($file)->save(public_path('/icons/'.$icn));
+ $categorie->icon =  $icn;
+}
 
         $categorie = categorie::find($id);
         $categorie->name = $request->name;
-        //$categorie->icon = $request->icon;
-        //$categorie->image = $request->image;
         $categorie->save();
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
