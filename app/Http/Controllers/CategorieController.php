@@ -6,7 +6,6 @@ use App\Models\categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class CategorieController extends Controller
 {
     /**
@@ -25,12 +24,12 @@ class CategorieController extends Controller
  *     @OA\Response(response="200",
  *       description="a json array of categories"),
  *     @OA\Schema(type="json", items="string"),
- *     
+ *
  * )
  */
 
-        $categorie = categorie::with(['service'])->get();
-        return  $categorie->toJson(JSON_PRETTY_PRINT);
+        $categorie = categorie::with(['service']);
+        return $this->reply(true,null,$categorie);
     }
 
     /**
@@ -41,50 +40,50 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-    /**
-     * @OA\Post(
-     *   path="/api/categorie",
-     *   tags={"categories"},
-     *   summary="create user",
-     *   description="Get all request that have been send to a category",
+        /**
+         * @OA\Post(
+         *   path="/api/categorie",
+         *   tags={"categories"},
+         *   summary="create user",
+         *   description="Get all request that have been send to a category",
 
   *    @OA\Parameter(
-     *         name="name",
-     *         in="query",
-     *         description="category name",
-     *         required=true,
-     *         @OA\Schema(
-     *         type="string"
-     *         )
-     *     ),
-     *    @OA\Parameter(
-     *         name="icon",
-     *         in="query",
-     *         description="category icon ",
-     *         required=true,
-     *         @OA\Schema(
-     *         type="string"
-     *         ),
-     *         style="form"
-     *     ),
-     *    @OA\Parameter(
-     *         name="image",
-     *         in="query",
-     *         description="catgory image",
-     *         required=true,
-     *         @OA\Schema(
-     *         type="string"
-     *         ),
-     *         style="form"
-     *     ),
-     *     @OA\Response(
-     *     response=201,
-     *     description="created",
-     *     @OA\Schema(type="json"),
-     *
-     *   ),
-     * )
-     */
+         *         name="name",
+         *         in="query",
+         *         description="category name",
+         *         required=true,
+         *         @OA\Schema(
+         *         type="string"
+         *         )
+         *     ),
+         *    @OA\Parameter(
+         *         name="icon",
+         *         in="query",
+         *         description="category icon ",
+         *         required=true,
+         *         @OA\Schema(
+         *         type="string"
+         *         ),
+         *         style="form"
+         *     ),
+         *    @OA\Parameter(
+         *         name="image",
+         *         in="query",
+         *         description="catgory image",
+         *         required=true,
+         *         @OA\Schema(
+         *         type="string"
+         *         ),
+         *         style="form"
+         *     ),
+         *     @OA\Response(
+         *     response=201,
+         *     description="created",
+         *     @OA\Schema(type="json"),
+         *
+         *   ),
+         * )
+         */
 
         $categorie = new categorie;
         $file = $request->file('image');
@@ -97,12 +96,12 @@ class CategorieController extends Controller
         $extension = $file->getClientOriginalExtension();
         $icn = 'icon_'.$categorie->id.'.'.$extension;
         Image::make($file)->save(public_path('/icons/'.$icn));
-        $categorie->icon = $icn; 
+        $categorie->icon = $icn;
 
         $categorie->name = $request->name;
         $categorie->save();
 
-        return response()->jSon( [ 'success'=>'created'],200);
+        return $this->reply(true,"bien enregistré",null);
     }
 
     /**
@@ -113,7 +112,6 @@ class CategorieController extends Controller
      */
     public function show(Categorie $categorie)
     {
-        
     }
 
 
@@ -133,7 +131,7 @@ class CategorieController extends Controller
      *   summary="update category ",
      *    tags={"categories"},
      *   description="Get all request that have been send to a category",
-     * 
+     *
      *         @OA\Parameter(
      *         name="name",
      *         in="query",
@@ -164,8 +162,8 @@ class CategorieController extends Controller
      *         type="string"
      *         ),
      *         style="form"
-     *     ),  
-     *     
+     *     ),
+     *
      *     @OA\Response(
      *     response=201,
      *     description="updated",
@@ -176,29 +174,29 @@ class CategorieController extends Controller
      */
 
 
-    if($request->file('image')){
-        @unlink(public_path('/images/'.$categorie->image));
-        $file = $request->file('image');
-     $extension = $file->getClientOriginalExtension();
-     $img = 'image_'.$categorie->id.'.'.$extension;
-     Image::make($file)->save(public_path('/images/'.$img));
-     $categorie->image =  $img;
-   }
+        if ($request->file('image')) {
+            @unlink(public_path('/images/'.$categorie->image));
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $img = 'image_'.$categorie->id.'.'.$extension;
+            Image::make($file)->save(public_path('/images/'.$img));
+            $categorie->image =  $img;
+        }
 
-   if($request->file('icon')){
-    @unlink(public_path('/icons/'.$categorie->icon));
-    $file = $request->file('icon');
- $extension = $file->getClientOriginalExtension();
- $icn = 'icon_'.$categorie->id.'.'.$extension;
- Image::make($file)->save(public_path('/icons/'.$icn));
- $categorie->icon =  $icn;
-}
+        if ($request->file('icon')) {
+            @unlink(public_path('/icons/'.$categorie->icon));
+            $file = $request->file('icon');
+            $extension = $file->getClientOriginalExtension();
+            $icn = 'icon_'.$categorie->id.'.'.$extension;
+            Image::make($file)->save(public_path('/icons/'.$icn));
+            $categorie->icon =  $icn;
+        }
 
         $categorie = categorie::find($id);
         $categorie->name = $request->name;
         $categorie->save();
 
-        return response()->json(['succes'=>'modification effectuée avec succes'],200);
+        return response()->json(['succes'=>'modification effectuée avec succes'], 200);
     }
 
     /**
@@ -217,7 +215,7 @@ class CategorieController extends Controller
      *   summary="delete category by id user ",
      *   tags={"categories"},
      *   description="delete a category",
-     *     
+     *
      *     @OA\Response(
      *     response=200,
      *     description="deleted",
@@ -227,7 +225,7 @@ class CategorieController extends Controller
      * )
      */
 
-        categorie::where('id',$categorie->id)->delete();
+        categorie::where('id', $categorie->id)->delete();
         return response()->json(['succes'=>'suppression effectuée avec succes'], 200);
     }
 }
