@@ -29,11 +29,7 @@ class CategorieController extends Controller
  */
 
         $categorie = categorie::with(['service']);
-       // $categorie = categorie::get();
-        //return $this->reply(true,null,$categorie);
-        //return  $categorie->toJson(JSON_PRETTY_PRINT);
-        return response()->json($categorie);
-
+        return $this->reply(true,"service data",$categorie);
     }
 
     /**
