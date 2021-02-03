@@ -28,8 +28,8 @@ class CategorieController extends Controller
  * )
  */
 
-        $categorie = categorie::with(['service']);
-        return $this->reply(true,"service data",$categorie);
+        $categorie = categorie::with(['service'])->get();
+        return $this->reply(true,null, $categorie);
     }
 
     /**
