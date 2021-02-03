@@ -20,13 +20,13 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 
-    // public function reply($success, $message=null, $data=null){
-    //     $response = [
-    //         "success"=>$success, 
-    //         "message"=>$message, 
-    //         "data"=>$data
-    //     ];
+    public function reply($success, $message=null, $data=null){
+        $response = [
+            "success"=>$success, 
+            "message"=>$message, 
+            "data"=>$data
+        ];
 
-    //     return response()->json($response);
-    // }
+        return response()->json($response);
+    }
 }
