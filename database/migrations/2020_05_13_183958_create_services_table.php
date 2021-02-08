@@ -18,6 +18,7 @@ class CreateServicesTable extends Migration
             $table->string("name");
             $table->string("icon");
             $table->string("image");
+            $table->decimal("minimal_price");
             $table->BigInteger('categorie_id')->unsigned();
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();

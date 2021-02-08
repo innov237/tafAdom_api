@@ -12,6 +12,7 @@ use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\DeliveryAddress;
 use App\Http\Controllers\DeliveryServiceRequestController;
 use App\Http\Controllers\DiscountedServiceController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,6 +44,7 @@ Route::group([
 
 
 Route::apiResource('categorie',CategorieController::class);
+Route::apiResource('user',UserController::class);
 Route::apiResource('service',ServiceController::class);
 Route::apiResource('serviceRequest',ServiceRequestController::class);
 Route::apiResource('provider',ProviderController::class);
