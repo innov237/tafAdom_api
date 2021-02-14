@@ -15,7 +15,9 @@ class ProviderSeeder extends Seeder
     {
         //
         //
-        for( $i;  i <= 10; $i++){
+        $faker = \Faker\Factory::create();
+        
+        for( $i=0;   $i <= 10; $i++){
             \App\Models\provider::create([
                 "name" => $faker->firstName,
                 "phone_number" => $faker->unique()->e164PhoneNumber,

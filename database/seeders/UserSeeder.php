@@ -14,7 +14,9 @@ class UserSeeder extends Seeder
     public function run()
     {
         //
-        for( $i;  i <= 10; $i++){
+        $faker = \Faker\Factory::create();
+        
+        for( $i=0;   $i <= 10; $i++){
             \App\Models\User::create([
                 "name" => $faker->firstName,
                 "residence" => $faker->firstName,
