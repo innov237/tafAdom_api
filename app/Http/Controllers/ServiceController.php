@@ -7,6 +7,8 @@ use App\Models\categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Intervention\Image\Facades\Image;
+
 class ServiceController extends Controller
 {
     /**
@@ -87,6 +89,7 @@ class ServiceController extends Controller
      *   ),
      * )
      */
+        $categorie = categorie::find($request->input('categorie_id'));
 
         $service = new service;
 

@@ -6,6 +6,8 @@ use App\Models\categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Intervention\Image\Facades\Image;
+
 class CategorieController extends Controller
 {
     /**
