@@ -30,7 +30,7 @@ class CategorieController extends Controller
  * )
  */
 
-        $categorie = categorie::with(['service'])->paginate(8);
+        $categorie = categorie::with(['service'])->orderBy('id', 'DESC')->paginate(8);
         return $this->reply(true,null, $categorie);
     }
 

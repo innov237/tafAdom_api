@@ -31,7 +31,7 @@ class ServiceController extends Controller
  *     
  * )
  */
-        $service = service::with(['categorie'])->paginate(8);
+        $service = service::with(['categorie'])->orderBy('id', 'DESC')->paginate(8);
         return  $service->toJson(JSON_PRETTY_PRINT);
         }
 
@@ -92,22 +92,27 @@ class ServiceController extends Controller
         $categorie = categorie::find($request->input('categorie_id'));
 
         $service = new service;
+        
+        $service->name = $request->name;
+        #$service->service_request_id = $request->service_request_id;
+        $service->categorie_id  = $request->categorie_id;
+        $service->minimal_price = $request->minimal_price;
+        $service->icon = "default.jpeg";
+        $service->image = "default.jpeg";
+        $service->save();
 
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
-        $img = 'image_'.$categorie->id.'.'.$extension;
+        $img = 'image_'.$service->id.'.'.$extension;
         Image::make($file)->save(public_path('/images/'.$img));
-        $categorie->image = $img;
+        $service->image = $img;
 
-        $file = $request->file('icon');
-        $extension = $file->getClientOriginalExtension();
-        $icn = 'icon_'.$categorie->id.'.'.$extension;
+        $icon = $request->file('icon');
+        $extension = $icon->getClientOriginalExtension();
+        $icn = 'icon_'.$service->id.'.'.$extension;
         Image::make($file)->save(public_path('/icons/'.$icn));
-        $categorie->icon = $icn; 
-
-        $service->name = $request->name;
-        $service->service_request_id = $request->service_request_id;
-        $service->categorie_id = $request->categorie_id;
+        $service->icon = $icn; 
+        
         $service->save();
 
         return response()->jSon( [ 'success'=>'created'],200);
@@ -182,29 +187,29 @@ class ServiceController extends Controller
      *   ),
      * )
      */
-
-        $service = service::find($id);
+        
 
         if($request->file('image')){
-            @unlink(public_path('/images/'.$categorie->image));
+            @unlink(public_path('/images/'.$service->image));
             $file = $request->file('image');
          $extension = $file->getClientOriginalExtension();
-         $img = 'image_'.$categorie->id.'.'.$extension;
+         $img = 'image_'.$service->id.'.'.$extension;
          Image::make($file)->save(public_path('/images/'.$img));
-         $categorie->image =  $img;
+         $service->image =  $img;
        }
     
        if($request->file('icon')){
-        @unlink(public_path('/icons/'.$categorie->icon));
+        @unlink(public_path('/icons/'.$service->icon));
         $file = $request->file('icon');
-     $extension = $file->getClientOriginalExtension();
-     $icn = 'icon_'.$categorie->id.'.'.$extension;
-     Image::make($file)->save(public_path('/icons/'.$icn));
-     $categorie->icon =  $icn;
+        
+       $extension = $file->getClientOriginalExtension();
+       $icn = 'icon_'.$service->id.'.'.$extension;
+       Image::make($file)->save(public_path('/icons/'.$icn));
+       $service->icon =  $icn;
 
         $service->name = $request->name;
         $service->service_request_id = $request->service_request_id;
-        $service->categorie_id = $request->categorie_id;;
+        //$service->categorie_id = $request->categorie_id;;
         $service->save();
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
