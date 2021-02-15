@@ -29,7 +29,7 @@ class ServiceController extends Controller
  *     
  * )
  */
-        $service = service::with(['categorie'])->get();
+        $service = service::with(['categorie'])->paginate(8);
         return  $service->toJson(JSON_PRETTY_PRINT);
         }
 
