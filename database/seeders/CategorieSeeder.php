@@ -14,17 +14,17 @@ class CategorieSeeder extends Seeder
     public function run()
     {
         //
-        \App\Models\cities::create([
-            "name" => "Santé"
-        ]);
+        //
+        $faker = \Faker\Factory::create();
 
-        \App\Models\cities::create([
-            "name" => "Electronique"
-        ]);
-
-        \App\Models\cities::create([
-            "name" => "Lessive"
-        ]);
+        for( $i=0;   $i <= 10; $i++){
+            \App\Models\categorie::create([
+                "name" => $faker->firstName,
+                "icon" => "default.jpeg",
+                "image" => "default.jpeg"
+                
+            ]);
+        }
 
     }
 }
