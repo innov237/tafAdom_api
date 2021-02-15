@@ -17,7 +17,7 @@ class CategorieSeeder extends Seeder
         //
         $faker = \Faker\Factory::create();
 
-        for( $i=0;   $i <= 10; $i++){
+        for( $i=0;   $i <= 15; $i++){
             \App\Models\categorie::create([
                 "name" => $faker->firstName,
                 "icon" => "default.jpeg",

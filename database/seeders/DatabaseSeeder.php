@@ -20,10 +20,11 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         
         $this->call([
-            //CitySeeder::class,
-            //UserSeeder::class,
-            //ProviderSeeder::class,
-            //ServiceSeeder::class,
+            CitySeeder::class,
+            CategorieSeeder::class,
+            UserSeeder::class,
+            ProviderSeeder::class,
+            ServiceSeeder::class,
             CategorieSeeder::class
         ]);
 
