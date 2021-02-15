@@ -28,7 +28,7 @@ class ProviderController extends Controller
  * )
  */
 
-        $provider = DB::table('providers')->paginate(8);
+        $provider = DB::table('providers')->orderBy('id', 'DESC')->paginate(8);
         return  $provider->toJson(JSON_PRETTY_PRINT);
     }
 
