@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 "telephone" => $faker->unique()->e164PhoneNumber,
                 "cities_id" => rand(1,4),
                 "email" => $faker->unique()->safeEmail,
-                "password" => "password"
+                "password" => bcrypt("password")
             ]);
         }
     }

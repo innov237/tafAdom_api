@@ -19,7 +19,7 @@ class CategorieSeeder extends Seeder
 
         for( $i=0;   $i <= 15; $i++){
             \App\Models\categorie::create([
-                "name" => $faker->firstName,
+                "name" => $faker->unique()->firstName,
                 "icon" => "default.jpeg",
                 "image" => "default.jpeg"
                 

@@ -190,30 +190,30 @@ class ServiceController extends Controller
         
 
         if($request->file('image')){
-            @unlink(public_path('/images/'.$service->image));
-            $file = $request->file('image');
-         $extension = $file->getClientOriginalExtension();
-         $img = 'image_'.$service->id.'.'.$extension;
-         Image::make($file)->save(public_path('/images/'.$img));
-         $service->image =  $img;
+          @unlink(public_path('/images/'.$service->image));
+          
+          $file = $request->file('image');
+          $extension = $file->getClientOriginalExtension();
+          $img = 'image_'.$service->id.'.'.$extension;
+          Image::make($file)->save(public_path('/images/'.$img));
+          $service->image =  $img;
        }
     
        if($request->file('icon')){
         @unlink(public_path('/icons/'.$service->icon));
         $file = $request->file('icon');
-        
-       $extension = $file->getClientOriginalExtension();
-       $icn = 'icon_'.$service->id.'.'.$extension;
-       Image::make($file)->save(public_path('/icons/'.$icn));
-       $service->icon =  $icn;
-
-        $service->name = $request->name;
-        $service->service_request_id = $request->service_request_id;
-        //$service->categorie_id = $request->categorie_id;;
-        $service->save();
+        $extension = $file->getClientOriginalExtension();
+        $icn = 'icon_'.$service->id.'.'.$extension;
+        Image::make($file)->save(public_path('/icons/'.$icn));
+        $service->icon =  $icn;
+      }
+      
+      $service->name = $request->name;
+      //$service->service_request_id = $request->service_request_id;
+      $service->categorie_id = $request->categorie_id;
+      $service->save();
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
-    }
 }
 
     /**
