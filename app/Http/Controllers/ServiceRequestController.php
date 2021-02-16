@@ -27,7 +27,7 @@ class ServiceRequestController extends Controller
  * )
  */
 
-        $sr = service_request::with(['serviceUser'])->get();
+        $sr = service_request::with(['serviceUser' ,'serviceAsk', 'delivryAddress'])->orderBy('id', 'DESC')->paginate(8);
         return  $sr->toJson(JSON_PRETTY_PRINT);
     }
 
