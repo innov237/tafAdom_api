@@ -19,8 +19,14 @@ class service_request extends Model
         return $this->belongsTo(service::class, 'service_id');
     }
 
+
     public function delivryAddress()
     {
         return $this->belongsTo(delivery_address::class, 'delivery_address_id');
+    }
+
+    public function serviceProcessing()
+    {
+        return $this->hasMany(delivery_services_request::class, 'service_request_id');
     }
 }

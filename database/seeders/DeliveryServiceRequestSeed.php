@@ -21,7 +21,7 @@ class DeliveryServiceRequestSeed extends Seeder
         for( $i=0;   $i <= 15; $i++){
             \App\Models\delivery_services_request::create([
                 "amout" => rand(1,100000),
-                "status" => rand(1,3),
+                "status" => rand(1,2),
                 "service_request_id" => rand(1,15),
                 "provider_id" => rand(1,15),
                 

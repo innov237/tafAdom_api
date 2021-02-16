@@ -11,13 +11,12 @@ class delivery_services_request extends Model
 
     public function getStatusAttribute($value){
 
-    	if ( 1 == $value)
-    		return "En attente de traitement";
+    	
 
-    	if ( 2 == $value)
+    	if ( 1 == $value)
     		return "En cours de traitement";
 
-    	if ( 3 == $value)
+    	if ( 2 == $value)
     		return "Traité";
     }
     

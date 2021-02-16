@@ -7,29 +7,71 @@ use Illuminate\Http\Request;
 
 class ServiceRequestController extends Controller
 {
-/**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-                /**
- * @OA\Get(
- *     path="/api/serviceRequest",
- *     tags={"service Request"},
- *     summary="return a list of service Request",
- *     description="list of service Request",
- *     @OA\Response(response="200",
- *       description="a json array of service Request"),
- *     @OA\Schema(type="json", items="string"),
- *     
- * )
- */
+    /**
+         * Display a listing of the resource.
+         *
+         * @return \Illuminate\Http\Response
+         */
+        public function index()
+        {
+                    /**
+         * @OA\Get(
+         *     path="/api/serviceRequest",
+         *     tags={"service Request"},
+         *     summary="return a list of service Request",
+         *     description="list of service Request",
+         *     @OA\Response(response="200",
+         *       description="a json array of service Request"),
+         *     @OA\Schema(type="json", items="string"),
+         *     
+         * )
+         */
 
-        $sr = service_request::with(['serviceUser' ,'serviceAsk', 'delivryAddress'])->orderBy('id', 'DESC')->paginate(8);
+        $sr = service_request::with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
         return  $sr->toJson(JSON_PRETTY_PRINT);
-    }
+        }
+
+
+        public function filterCommand(Request $request, $town=0, $status = 0)
+        {
+
+            
+
+            if ($town != 0  && $status != 0 ){
+
+                $sr = service_request::whereHas('serviceUser', function($q) use ($town) {
+                        $q->where('cities_id', $town);
+                })->whereHas('serviceProcessing', function($q) use ($status) {
+                        $q->where('status', $status);
+                })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+            
+                return  $sr->toJson(JSON_PRETTY_PRINT);
+            }
+
+            if ($town == 0 && $status == 0){
+                
+               return response()->json(['data' => []]);
+            }
+
+            if ( $status != 0){
+                $sr = service_request::whereHas('serviceProcessing', function($q) use ($status) {
+                        $q->where('status', $status);
+                })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+            
+                return  $sr->toJson(JSON_PRETTY_PRINT);
+            }
+
+            if ( $town != 0 ){
+
+                $sr = service_request::whereHas('serviceUser', function($q) use ($town) {
+                        $q->where('cities_id', $town);
+                })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+            
+                return  $sr->toJson(JSON_PRETTY_PRINT);
+            }
+
+        }
+
 
 
     /**

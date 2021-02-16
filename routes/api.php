@@ -44,6 +44,7 @@ Route::group([
 
 
 Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
+Route::get('serviceRequest/town/{town?}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
 
 Route::apiResource('categorie',CategorieController::class);
 Route::apiResource('user',UserController::class);
