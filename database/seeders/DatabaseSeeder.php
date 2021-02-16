@@ -21,13 +21,21 @@ class DatabaseSeeder extends Seeder
         
         $this->call([
             CitySeeder::class,
-            CategorieSeeder::class,
             UserSeeder::class,
             ProviderSeeder::class,
+            CategorieSeeder::class,
             ServiceSeeder::class,
-            CategorieSeeder::class
+            
+
+            DelivryAddreSeed::class,
+            ServiceRequestSeed::class,
+            DeliveryServiceRequestSeed::class,
+            ServiceProviderSeed::class,
+            DiscountServiceSeed::class
+
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
+ 

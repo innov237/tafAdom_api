@@ -24,7 +24,7 @@ class CreateDeliveryServicesRequestsTable extends Migration
             $table->timestamps();
         });
     }
-
+ 
     /**
      * Reverse the migrations.
      *

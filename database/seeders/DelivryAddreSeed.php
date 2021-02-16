@@ -15,7 +15,7 @@ class DelivryAddreSeed extends Seeder
     {
         //
 
-        delivery_address
+        
         $faker = \Faker\Factory::create();
         
         for( $i=0;   $i <= 15; $i++){
@@ -24,7 +24,6 @@ class DelivryAddreSeed extends Seeder
                 "user_id" => rand(1,16),
                 "city_id" => rand(1,4),
                 "phone_number" => $faker->unique()->e164PhoneNumber,
-                "email" => $faker->unique()->safeEmail,
             ]);
         }
     }

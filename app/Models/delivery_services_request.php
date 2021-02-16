@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class delivery_service_request extends Model
+class delivery_services_request extends Model
 {
     use HasFactory;
 

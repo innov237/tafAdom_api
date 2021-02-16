@@ -14,5 +14,14 @@ class ServiceProviderSeed extends Seeder
     public function run()
     {
         //
+        $faker = \Faker\Factory::create();
+        
+        for( $i=0;   $i <= 15; $i++){
+            \App\Models\service_provider::create([
+                "id_service" => rand(1,15),
+                "id_provider" => rand(1,15),
+                
+            ]);
+        }
     }
 }

@@ -20,6 +20,7 @@ class CreateServiceRequestsTable extends Migration
             $table->BigInteger('user_id')->unsigned();
             $table->BigInteger('delivery_address_id')->unsigned();
             $table->string("time_solicitation");
+            
             $table->foreign('delivery_address_id')->references('id')->on('delivery_addresses')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
