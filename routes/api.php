@@ -43,6 +43,7 @@ Route::group([
 });
 
 
+Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
 
 Route::apiResource('categorie',CategorieController::class);
 Route::apiResource('user',UserController::class);

@@ -19,10 +19,12 @@ class UserController extends Controller
         return  $sr->toJson(JSON_PRETTY_PRINT);
     }
 
-    public function indexByTown()
+    public function indexByTown(Request $request, $id)
     {
         //
-        $sr = User::with(['city'])->orderBy('id', 'DESC')->paginate(8);
+        $sr = User::whereHas('city', function($q) use ($id) {
+              $q->where('id', $id);
+          })->orderBy('id', 'DESC')->paginate(8);
         return  $sr->toJson(JSON_PRETTY_PRINT);
     }
 
