@@ -12,7 +12,7 @@ class CreateDiscountedServicesTable extends Migration
      * @return void
      */
     public function up()
-    {
+    { 
         Schema::create('discounted_services', function (Blueprint $table) {
             $table->id();
             $table->date("started_date");

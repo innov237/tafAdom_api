@@ -28,9 +28,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('media/{filename}',[App\Http\Controllers\ImageController::class, 'show'])->name('images.show');
 
 Route::group([
-    'middleware' => 'api',
+    
     'prefix' => 'auth'
 
 ], function ($router) {
@@ -42,6 +43,8 @@ Route::group([
 });
 
 
+Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
+Route::get('serviceRequest/town/{town?}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
 
 Route::apiResource('categorie',CategorieController::class);
 Route::apiResource('user',UserController::class);

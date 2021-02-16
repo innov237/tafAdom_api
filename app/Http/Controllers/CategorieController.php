@@ -6,6 +6,8 @@ use App\Models\categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Intervention\Image\Facades\Image;
+
 class CategorieController extends Controller
 {
     /**
@@ -28,7 +30,7 @@ class CategorieController extends Controller
  * )
  */
 
-        $categorie = categorie::with(['service'])->get();
+        $categorie = categorie::with(['service'])->orderBy('id', 'DESC')->paginate(8);
         return $this->reply(true,null, $categorie);
     }
 
@@ -86,6 +88,12 @@ class CategorieController extends Controller
          */
 
         $categorie = new categorie;
+        
+        $categorie->name = $request->name;
+        $categorie->image = 'default.jpeg';
+        $categorie->icon =  'default.jpeg';
+        $categorie->save();
+        
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
         $img = 'image_'.$categorie->id.'.'.$extension;
@@ -98,7 +106,6 @@ class CategorieController extends Controller
         Image::make($file)->save(public_path('/icons/'.$icn));
         $categorie->icon = $icn;
 
-        $categorie->name = $request->name;
         $categorie->save();
 
         return $this->reply(true,"bien enregistré",null);
@@ -122,9 +129,10 @@ class CategorieController extends Controller
      * @param  \App\Models\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Categorie $categorie)
     {
-
+      
+      return response()->json(['name' => request('name') , 'data'=> $categorie]);
     /**
      * @OA\Patch(
      *   path="/api/categorie/{categorie} ",
@@ -173,7 +181,7 @@ class CategorieController extends Controller
      * )
      */
 
-
+        
         if ($request->file('image')) {
             @unlink(public_path('/images/'.$categorie->image));
             $file = $request->file('image');
@@ -191,8 +199,7 @@ class CategorieController extends Controller
             Image::make($file)->save(public_path('/icons/'.$icn));
             $categorie->icon =  $icn;
         }
-
-        $categorie = categorie::find($id);
+        
         $categorie->name = $request->name;
         $categorie->save();
 
@@ -225,7 +232,7 @@ class CategorieController extends Controller
      * )
      */
 
-        categorie::where('id', $categorie->id)->delete();
-        return response()->json(['succes'=>'suppression effectuée avec succes'], 200);
+        $categorie->delete();
+        return response()->json(['success'=>'suppression effectuée avec succes'], 200);
     }
 }

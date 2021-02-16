@@ -11,6 +11,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
+
+    protected $appends = ['city'];
+
     public function service_request()
     {
         return $this->hasMany(service_request::class);
@@ -66,6 +69,10 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims() {
         return [];
+    }
+
+    public function getCityAttribute(){
+        return cities::where('id', $this->cities_id)->first();
     } 
 
 }

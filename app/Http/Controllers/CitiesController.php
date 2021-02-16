@@ -27,7 +27,7 @@ class CitiesController extends Controller
  *     
  * )
  */
-        $citie = DB::table('cities')->get();
+        $citie = DB::table('cities')->paginate(8);
         return  $citie->toJson(JSON_PRETTY_PRINT);
     }
 

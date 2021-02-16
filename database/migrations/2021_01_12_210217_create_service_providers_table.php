@@ -17,6 +17,7 @@ class CreateServiceProvidersTable extends Migration
             $table->id();
             $table->bigInteger("id_service")->unsigned();
             $table->bigInteger("id_provider")->unsigned();
+            
             $table->foreign('id_service')->references('id')->on('services')->onDelete('cascade');
             $table->foreign('id_provider')->references('id')->on('providers')->onDelete('cascade');
             $table->timestamps();

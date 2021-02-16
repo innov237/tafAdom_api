@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\delivery_service_request;
+use App\Models\delivery_services_request;
 use Illuminate\Http\Request;
+
+use DB;
 
 class DeliveryServiceRequestController extends Controller
 {
@@ -27,8 +29,8 @@ class DeliveryServiceRequestController extends Controller
  * )
  */
 
-        $deliverySR = DB::table('delivery_service_requests')->get();
-        return  $service->toJson(JSON_PRETTY_PRINT);
+        $deliverySR = delivery_services_request::paginate(8);
+        return  $deliverySR->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
