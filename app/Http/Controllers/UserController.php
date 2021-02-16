@@ -24,7 +24,7 @@ class UserController extends Controller
         //
         $sr = User::whereHas('city', function($q) use ($id) {
               $q->where('id', $id);
-          })->orderBy('id', 'DESC')->paginate(8);
+          })->with(['city'])->orderBy('id', 'DESC')->paginate(8);
         return  $sr->toJson(JSON_PRETTY_PRINT);
     }
 
