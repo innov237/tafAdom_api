@@ -14,7 +14,6 @@ class delivery_services_request extends Model
     public function getStatusAttribute($value){
 
     	
-
     	if ( 1 == $value)
     		return "En cours de traitement";
 
