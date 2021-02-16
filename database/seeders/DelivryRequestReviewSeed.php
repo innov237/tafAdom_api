@@ -16,7 +16,7 @@ class DelivryRequestReviewSeed extends Seeder
         //
         $faker = \Faker\Factory::create();
         
-        for( $i=0;   $i <= 15; $i++){
+        for( $i=0;   $i <= 20; $i++){
             \App\Models\delivery_request_review::create([
                 "mark" => rand(1,16),
                 "delivery_request_id" => rand(1,16),
