@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Validator;
 
 class UserController extends Controller
 {
@@ -35,17 +36,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
-       
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|between:2,100',
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'required|string|confirmed|min:6',
+        ]);
+
            $user=new User();
-           $user->name=$request->name;
-           $user->email=$request->email;
-           $user->password=bcrypt($request->password);
-           $user->residence=$request->residence;
-           $user->telephone=$request->telephone;
-           $user->cities_id=$request->cities_id;
+           $user->name = $request->name;
+           $user->email = $request->email;
+           $user->password = bcrypt($request->password);
+           $user->residence = $request->residence;
+           $user->telephone = $request->telephone;
+           $user->cities_id = 1;
            $user->save();
-           return response()->json(['succes'=>'bien enregistré'], 200);
+           return $this->reply(true,"bien enregistré",null);
     }
 
     /**
