@@ -104,9 +104,11 @@ class DeliveryServiceRequestController extends Controller
      * @param  \App\Models\delivery_service_request  $delivery_service_request
      * @return \Illuminate\Http\Response
      */
-    public function show(delivery_service_request $delivery_service_request)
+    public function show(Request $request, delivery_services_request $deliveryServiceRequest)
     {
         //
+
+        return $deliveryServiceRequest;
     }
 
     /**
@@ -116,7 +118,7 @@ class DeliveryServiceRequestController extends Controller
      * @param  \App\Models\delivery_service_request  $delivery_service_request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id, delivery_service_request $delivery_service_request)
+    public function update(Request $request, delivery_services_request $deliveryServiceRequest)
     {
 
   /**
@@ -168,11 +170,18 @@ class DeliveryServiceRequestController extends Controller
      */
 
 
-        $deliverySR = delivery_service_request::find($id);
-        $deliverySR->amout = $request->amout;
+        $credentials = $request->only(['amout', 'delivery_address_id', 'status']);
+
+        $deliveryServiceRequest->update($credentials);
+
+
+
+        //$deliverySR = delivery_service_request::find($id);
+        
+        /*$deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
         $deliverySR->delivery_address_id = $request->delivery_address_id;
-        $deliverySR->save();
+        $deliverySR->save();*/
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
     }

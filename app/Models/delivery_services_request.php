@@ -9,6 +9,8 @@ class delivery_services_request extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['amout', 'status', 'delivery_address_id'];
+
     public function getStatusAttribute($value){
 
     	
