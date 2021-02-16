@@ -15,6 +15,8 @@ class UserController extends Controller
     public function index()
     {
         //
+        $sr = User::with(['city'])->orderBy('id', 'DESC')->paginate(8);
+        return  $sr->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
