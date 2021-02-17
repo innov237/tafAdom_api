@@ -29,4 +29,14 @@ class Controller extends BaseController
 
         return response()->json($response);
     }
+
+    public function jwt($success, $message=null, $data=null){
+        $response = [
+            "success"=>$success, 
+            "message"=>$message, 
+            "data"=>$data
+        ];
+
+        return response()->json($response,200);
+    }
 }

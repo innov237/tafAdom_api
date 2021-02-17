@@ -94,6 +94,8 @@ class DeliveryServiceRequestController extends Controller
         $deliverySR = new delivery_services_request;
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
+        $deliverySR->provider_id = $request->provider_id;
+        $deliverySR->service_request_id = $request->service_request_id;
         $deliverySR->delivery_address_id = $request->delivery_address_id;
         $deliverySR->save();
 

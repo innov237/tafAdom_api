@@ -62,5 +62,6 @@ Route::get('serviceRequest/town/{town?}/status/{status?}', [ServiceRequestContro
 
 Route::get('serviceRequest/user/{uuid}/status/{status?}', [ServiceRequestController::class, 'filterCommandByUser']);
 
-
 Route::get('serviceRequest/service/{uuid}/', [ServiceProviderController::class, 'filterByService']);
+
+Route::get('deliveryAddress/user/{uuid}/', [DeliveryAddress::class, 'filterAddressByUser']);

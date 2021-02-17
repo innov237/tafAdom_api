@@ -28,13 +28,13 @@ class JwtMiddleware
 
         } catch (Exception $e) {
             if ($e instanceof TokenInvalidException) {
-                return $controller->reply(false,'INVALID_TOKEN');
+                return $controller->jwt(false,'INVALID_TOKEN');
             } else if ($e instanceof TokenExpiredException) {
-                return $controller->reply(false,'TOKEN_EXPIRED');
+                return $controller->jwt(false,'TOKEN_EXPIRED');
             } else if ($e instanceof TokenBlacklistedException) {
-                return $controller->reply(false,'BLACK_LISTED_TOKEN');
+                return $controller->jwt(false,'BLACK_LISTED_TOKEN');
             } else {
-                return $controller->reply(false,'NO_TOKEN');
+                return $controller->jwt(false,'NO_TOKEN');
             }
         }
         return $next($request);
