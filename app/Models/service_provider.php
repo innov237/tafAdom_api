@@ -11,6 +11,11 @@ class service_provider extends Model
 
     protected $appends = ['count_mark'];
 
+
+    public function scopeServices($query, $value){
+    	return $query->where('id_service', $value);
+    }
+
     public function provider(){
     	return $this->belongsTo(provider::class ,'id_provider');
     }
