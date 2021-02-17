@@ -6,6 +6,7 @@ use App\Models\service;
 use App\Models\categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 use Intervention\Image\Facades\Image;
 
@@ -43,6 +44,10 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+            'image' => 'required',
+        ]);
   /**
      * @OA\Post(
      *   path="/api/service",
@@ -93,25 +98,30 @@ class ServiceController extends Controller
 
         $service = new service;
         
+        
         $service->name = $request->name;
         #$service->service_request_id = $request->service_request_id;
         $service->categorie_id  = $request->categorie_id;
         $service->minimal_price = $request->minimal_price;
-
-        $file = $request->file('image');
-        $extension = $file->getClientOriginalExtension();
-        $img = 'image_'.$service->id.'.'.$extension;
-        Image::make($file)->save(public_path('/images/'.$img));
-        $service->image = $img;
+        $service->image = 'image.jpeg';
+        $service->icon = 'icon.jpeg'; 
         $service->save();
 
-        $icon = $request->file('icon');
-        $extension = $icon->getClientOriginalExtension();
-        $icn = 'icon_'.$service->id.'.'.$extension;
-        Image::make($file)->save(public_path('/icons/'.$icn));
-        $service->icon = $icn; 
+
+        // $file = $request->file('image');
+        // $extension = $file->getClientOriginalExtension();
+        // $img = 'image_'.$service->id.'.'.$extension;
+        // Image::make($file)->save(public_path('/images/'.$img));
+        // $service->image = $img;
+        // $service->save();
+
+        // $icon = $request->file('icon');
+        // $extension = $icon->getClientOriginalExtension();
+        // $icn = 'icon_'.$service->id.'.'.$extension;
+        // Image::make($file)->save(public_path('/icons/'.$icn));
+        // $service->icon = $icn; 
         
-        $service->save();
+        // $service->save();
 
         return response()->jSon( [ 'success'=>'created'],200);
     }

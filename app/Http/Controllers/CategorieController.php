@@ -42,6 +42,10 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name'=>'required|string|max:30',
+            'image'=>'required',
+        ]);
         /**
          * @OA\Post(
          *   path="/api/categorie",
@@ -131,7 +135,11 @@ class CategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
-      
+        $this->validate($request,[
+            'name'=>'required|string|max:30',
+            'image'=>'required',
+        ]);
+    
         return response()->json(['name' => request('name') , 'data'=> $categorie]);
     /**
      * @OA\Patch(

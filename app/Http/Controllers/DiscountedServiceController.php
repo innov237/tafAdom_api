@@ -96,6 +96,12 @@ class DiscountedServiceController extends Controller
      *   ),
      * )
      */
+    $this->validate($request,[
+        'start_date'=>'required',
+        'end_date'=>'required',
+        'reduction'=>'required',
+        'service_id'=>'required',
+    ]);
 
         $discounted_service = new discounted_service;
         $discounted_service->start_date = $request->start_date;
@@ -127,6 +133,12 @@ class DiscountedServiceController extends Controller
      */
     public function update(Request $request, discounted_service $discounted_service)
     {
+        $this->validate($request,[
+            'start_date'=>'required',
+            'end_date'=>'required',
+            'reduction'=>'required',
+            'service_id'=>'required',
+        ]);
 
  /**
      * @OA\Patch(
