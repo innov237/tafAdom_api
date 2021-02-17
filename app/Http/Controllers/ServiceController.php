@@ -97,15 +97,13 @@ class ServiceController extends Controller
         #$service->service_request_id = $request->service_request_id;
         $service->categorie_id  = $request->categorie_id;
         $service->minimal_price = $request->minimal_price;
-        $service->icon = "default.jpeg";
-        $service->image = "default.jpeg";
-        $service->save();
 
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
         $img = 'image_'.$service->id.'.'.$extension;
         Image::make($file)->save(public_path('/images/'.$img));
         $service->image = $img;
+        $service->save();
 
         $icon = $request->file('icon');
         $extension = $icon->getClientOriginalExtension();
@@ -187,7 +185,7 @@ class ServiceController extends Controller
      *   ),
      * )
      */
-        
+        $service = Service::find($id);
 
         if($request->file('image')){
           @unlink(public_path('/images/'.$service->image));
