@@ -18,7 +18,7 @@ class ServiceSeeder extends Seeder
 
         for( $i=0;   $i <= 15; $i++){
             \App\Models\service::create([
-                "name" => $faker->firstName,
+                "name" => $faker->unique()->firstName,
                 "icon" => "default.jpeg",
                 "image" => "default.jpeg",
                 "minimal_price" => rand(1000, 150000),

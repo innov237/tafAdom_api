@@ -91,11 +91,13 @@ class DeliveryServiceRequestController extends Controller
      */
 
 
-        $deliverySR = new delivery_service_request;
+        $deliverySR = new delivery_services_request;
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
         $deliverySR->delivery_address_id = $request->delivery_address_id;
         $deliverySR->save();
+
+        return response()->json(['Request effectuée avec success'],200);
     }
 
     /**

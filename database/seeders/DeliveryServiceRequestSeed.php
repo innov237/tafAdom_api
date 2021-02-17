@@ -23,6 +23,7 @@ class DeliveryServiceRequestSeed extends Seeder
                 "amout" => rand(1,100000),
                 "status" => rand(1,2),
                 "service_request_id" => rand(1,15),
+                "delivery_address_id" => rand(1,15),
                 "provider_id" => rand(1,15),
                 
             ]);

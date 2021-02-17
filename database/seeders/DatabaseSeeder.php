@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             ServiceRequestSeed::class,
             DeliveryServiceRequestSeed::class,
             ServiceProviderSeed::class,
-            DiscountServiceSeed::class
+            DiscountServiceSeed::class,
             DelivryRequestReviewSeed::class
 
         ]);

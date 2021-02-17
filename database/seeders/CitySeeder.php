@@ -29,5 +29,17 @@ class CitySeeder extends Seeder
         \App\Models\cities::create([
             "name" => "Bamenda"
         ]);
+
+        \App\Models\cities::create([
+            "name" => "Figil"
+        ]);
+
+        \App\Models\cities::create([
+            "name" => "Maroua"
+        ]);
+
+        \App\Models\cities::create([
+            "name" => "Ebolowa"
+        ]);
     }
 }
