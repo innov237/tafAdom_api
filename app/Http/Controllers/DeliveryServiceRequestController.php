@@ -179,14 +179,6 @@ class DeliveryServiceRequestController extends Controller
         $deliveryServiceRequest->update($credentials);
 
 
-
-        //$deliverySR = delivery_service_request::find($id);
-        
-        /*$deliverySR->amout = $request->amout;
-        $deliverySR->status = $request->status;
-        $deliverySR->delivery_address_id = $request->delivery_address_id;
-        $deliverySR->save();*/
-
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
     }
 
