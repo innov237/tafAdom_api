@@ -43,8 +43,7 @@ Route::group([
 });
 
 
-Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
-Route::get('serviceRequest/town/{town?}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
+
 
 Route::apiResource('categorie',CategorieController::class);
 Route::apiResource('user',UserController::class);
@@ -56,3 +55,9 @@ Route::apiResource('city',CitiesController::class);
 Route::apiResource('deliveryAddress',DeliveryAddress::class);
 Route::apiResource('deliveryServiceRequest',DeliveryServiceRequestController::class);
 Route::apiResource('discounted',DiscountedServiceController::class);
+
+
+Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
+Route::get('serviceRequest/town/{town?}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
+
+Route::get('serviceRequest/user/{uuid}/status/{status?}', [ServiceRequestController::class, 'filterCommandByUser']);

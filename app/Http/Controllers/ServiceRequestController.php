@@ -32,7 +32,30 @@ class ServiceRequestController extends Controller
         }
 
 
-        public function filterCommand(Request $request, $town=0, $status = 0)
+        public function filterCommandByUser(Request $request, $uuid, $status = null)
+        {   
+
+            if ($status){
+                $sr = service_request::whereHas('serviceUser', function($q) use ($uuid) {
+                        $q->where('id', $uuid);
+                })->whereHas('serviceProcessing', function($q) use ($status) {
+                        $q->where('status', $status);
+                })
+                ->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+            
+                return  $sr->toJson(JSON_PRETTY_PRINT);
+            }
+
+            $sr = service_request::whereHas('serviceUser', function($q) use ($uuid) {
+                        $q->where('id', $uuid);
+                })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+            
+            return  $sr->toJson(JSON_PRETTY_PRINT);
+            
+
+        }
+
+        public function filterCommand(Request $request, $town = 0, $status = 0)
         {
 
             
@@ -50,7 +73,8 @@ class ServiceRequestController extends Controller
 
             if ($town == 0 && $status == 0){
                 
-               return response()->json(['data' => []]);
+                $sr = service_request::with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+                return  $sr->toJson(JSON_PRETTY_PRINT);
             }
 
             if ( $status != 0){
