@@ -42,6 +42,10 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name'=>'required|string|max:30',
+            'image'=>'required',
+        ]);
         /**
          * @OA\Post(
          *   path="/api/categorie",
@@ -129,10 +133,14 @@ class CategorieController extends Controller
      * @param  \App\Models\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categorie $categorie)
+    public function update(Request $request, $id)
     {
-      
-      return response()->json(['name' => request('name') , 'data'=> $categorie]);
+        $this->validate($request,[
+            'name'=>'required|string|max:30',
+            'image'=>'required',
+        ]);
+    
+        return response()->json(['name' => request('name') , 'data'=> $categorie]);
     /**
      * @OA\Patch(
      *   path="/api/categorie/{categorie} ",
@@ -180,7 +188,7 @@ class CategorieController extends Controller
      *   ),
      * )
      */
-
+    $categorie = Categorie::find($id);
         
         if ($request->file('image')) {
             @unlink(public_path('/images/'.$categorie->image));
@@ -199,8 +207,11 @@ class CategorieController extends Controller
             Image::make($file)->save(public_path('/icons/'.$icn));
             $categorie->icon =  $icn;
         }
+
         
         $categorie->name = $request->name;
+
+        
         $categorie->save();
 
         return response()->json(['succes'=>'modification effectuée avec succes'], 200);

@@ -41,6 +41,7 @@ class DeliveryServiceRequestController extends Controller
      */
     public function store(Request $request)
     {
+        
  /**
      * @OA\Post(
      *   path="/api/deliveryServiceRequest",
@@ -90,7 +91,12 @@ class DeliveryServiceRequestController extends Controller
      * )
      */
 
-
+    $this->validate($request,[
+        'amout'=>'required',
+        'status'=>'required',
+        'delivery_address_id'=>'required',
+        
+    ]);
         $deliverySR = new delivery_service_request;
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;

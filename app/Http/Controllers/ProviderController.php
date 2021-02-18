@@ -40,6 +40,11 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name'=>'required|string|max:30',
+            'email'=>'required|email|unique:users,email',
+            'phone_number'=>'required',
+        ]);
 
 /**
      * @OA\Post(
@@ -115,6 +120,12 @@ class ProviderController extends Controller
      */
     public function update(Request $request,$id)
     {
+
+        $this->validate($request,[
+            'name'=>'required|string|max:30',
+            'email'=>'required|email',
+            'phone_number'=>'required',
+        ]);
 /**
      * @OA\Patch(
      *   path="/api/provider{provider}",
