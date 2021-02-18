@@ -27,7 +27,7 @@ class UserController extends Controller
               $q->where('id', $id);
           })->orderBy('id', 'DESC')->paginate(8);
         return  $sr->toJson(JSON_PRETTY_PRINT);
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.

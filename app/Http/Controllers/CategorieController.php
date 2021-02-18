@@ -131,7 +131,7 @@ class CategorieController extends Controller
      */
     public function update(Request $request, Categorie $categorie)
     {
-      
+       
       return response()->json(['name' => request('name') , 'data'=> $categorie]);
     /**
      * @OA\Patch(

@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class categorie extends Model
 {
     use HasFactory;
+
     public function service()
     {
         return $this->hasMany(service::class);
     }
+
 }

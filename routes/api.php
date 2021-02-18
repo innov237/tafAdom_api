@@ -58,7 +58,7 @@ Route::apiResource('discounted',DiscountedServiceController::class);
 
 
 Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
-Route::get('serviceRequest/town/{town?}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
+Route::get('serviceRequest/town/{town}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
 
 Route::get('serviceRequest/user/{uuid}/status/{status?}', [ServiceRequestController::class, 'filterCommandByUser']);
 
