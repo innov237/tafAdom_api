@@ -88,8 +88,6 @@ class ServiceRequestController extends Controller
                             $q->where('status', $status);
                     })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
                 }
-
-               
             
                 return  $sr->toJson(JSON_PRETTY_PRINT);
             }
@@ -108,6 +106,7 @@ class ServiceRequestController extends Controller
                     })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
 
                 }else{
+                    
                     $sr = service_request::whereHas('serviceProcessing', function($q) use ($status) {
                         $q->where('status', $status);
                     })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
