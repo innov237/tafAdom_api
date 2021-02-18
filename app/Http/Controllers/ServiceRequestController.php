@@ -100,7 +100,7 @@ class ServiceRequestController extends Controller
                 return  $sr->toJson(JSON_PRETTY_PRINT);
             }
 
-            if ( ($status > 0 && $status < 4 ) && $town== 0){
+            if ( ( $status > 0 && $status < 4 ) && $town == 0){
                 $sr = null;
                 if (3 == $status){
                     $sr = service_request::whereDoesntHave('serviceProcessing', function($q) use ($status) {

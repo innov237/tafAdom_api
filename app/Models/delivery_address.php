@@ -16,4 +16,9 @@ class delivery_address extends Model
     public function city(){
     	return $this->belongsTo(cities::class, 'city_id');
     }
+
+    public function owner(){
+        return User::find($this->user_id);
+    }
+
 }

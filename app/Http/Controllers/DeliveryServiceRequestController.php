@@ -99,6 +99,16 @@ class DeliveryServiceRequestController extends Controller
         $deliverySR->delivery_address_id = $request->delivery_address_id;
         $deliverySR->save();
 
+        $deliverySR = delivery_services_request::find(1);
+
+        $user = $deliverySR->address()->owner();
+
+        $this->mail([
+            'title' => 'Mail from ItSolutionStuff.com',
+            'body' => ( 1 == $request->status) ? 'La request à été prise en cours' : 'Requete terminée',
+            'email' => $user->email
+        ]);
+
         return response()->json(['Request effectuée avec success'],200);
     }
 

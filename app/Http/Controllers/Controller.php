@@ -39,4 +39,10 @@ class Controller extends BaseController
 
         return response()->json($response,200);
     }
+
+    public function mail($credentials){
+        \Mail::to($credentials['email'])->send(new \App\Mail\MailServiceNotification($credentials));
+   
+    
+    }
 }

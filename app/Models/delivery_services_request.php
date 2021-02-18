@@ -26,5 +26,9 @@ class delivery_services_request extends Model
     public function getProviderAttribute(){
     	return provider::where('id', $this->provider_id)->first();
     }
+
+    public function address(){
+        return delivery_address::find($this->delivery_address_id)->first();
+    }
     
 }
