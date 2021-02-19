@@ -81,6 +81,16 @@ class User extends Authenticatable implements JWTSubject
 
     public function getCityAttribute(){
         return cities::where('id', $this->cities_id)->first();
-    } 
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role');
+    }
+
+    public function isAdmin(){   
+
+        return $this->role->rank >= Role::find(Role::ADMIN)->rank;
+    }
 
 }
