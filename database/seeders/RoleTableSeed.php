@@ -19,6 +19,6 @@ class RoleTableSeed extends Seeder
             ['label' => 'User', 'rank' => 10]
         ];
 
-        Role::insert($data);
+        \App\Models\Role::insert($data);
     }
 }

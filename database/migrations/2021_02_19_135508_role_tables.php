@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\RoleTableSeed;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ class RoleTables extends Migration
             $table->timestamps();
         });
 
-        (new RolesTableSeeder())->run();
+        (new RoleTableSeed())->run();
     }
 
     /**

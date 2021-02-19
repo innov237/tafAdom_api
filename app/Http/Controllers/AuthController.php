@@ -16,7 +16,7 @@ class AuthController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth.verify', ['except' => ['login', 'register']]);
+        $this->middleware('auth.verify', ['except' => ['login', 'register', 'loginAdmin']]);
     }
 
     /**
@@ -37,6 +37,33 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
+        return $this->createNewToken($token);
+    }
+
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loginAdmin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        if (! $token = auth()->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        if (auth()->user()->role->rank < 100)
+            return response()->json(['error' => 'Only admin are authorize'], 401);
+
 
         return $this->createNewToken($token);
     }
