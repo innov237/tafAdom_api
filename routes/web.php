@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategorieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/m', function () {
+    return view('create_cat');
 });
+
+Route::put('categorie/update/{id}', [CategorieController::class,'update', 'as'=>'update']);
+Route::get('/up',[CategorieController::class,'edit']);
+

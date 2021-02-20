@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use Intervention\Image\Facades\Image;
+use Image;
 
 class CategorieController extends Controller
 {
@@ -93,22 +92,22 @@ class CategorieController extends Controller
 
         $categorie = new categorie;
         
-        $categorie->name = $request->name;
-        $categorie->image = 'default.jpeg';
-        $categorie->icon =  'default.jpeg';
-        $categorie->save();
-        
+        $categorie->name = $request->name;    
+
+       $file = $request->file('icon');
+       $extension = $file->getClientOriginalExtension();
+       $icn = 'icon_'.$categorie->id.'.'.$extension;
+       Image::make($file)->resize(122,122)->save(public_path('/icons/'.$icn));
+       $categorie->icon = $icn;
+
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
         $img = 'image_'.$categorie->id.'.'.$extension;
         Image::make($file)->save(public_path('/images/'.$img));
         $categorie->image = $img;
+        $categorie->save();
 
-        $file = $request->file('icon');
-        $extension = $file->getClientOriginalExtension();
-        $icn = 'icon_'.$categorie->id.'.'.$extension;
-        Image::make($file)->save(public_path('/icons/'.$icn));
-        $categorie->icon = $icn;
+   
 
         $categorie->save();
 
@@ -123,6 +122,7 @@ class CategorieController extends Controller
      */
     public function show(Categorie $categorie)
     {
+        return view('create_cat');
     }
 
 
@@ -140,7 +140,7 @@ class CategorieController extends Controller
             'image'=>'required',
         ]);
     
-        return response()->json(['name' => request('name') , 'data'=> $categorie]);
+       // return response()->json(['name' => request('name') , 'data'=> $categorie]);
     /**
      * @OA\Patch(
      *   path="/api/categorie/{categorie} ",
@@ -188,17 +188,10 @@ class CategorieController extends Controller
      *   ),
      * )
      */
-    $categorie = Categorie::find($id);
+    $categorie = categorie::find($id);
         
-        if ($request->file('image')) {
-            @unlink(public_path('/images/'.$categorie->image));
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $img = 'image_'.$categorie->id.'.'.$extension;
-            Image::make($file)->save(public_path('/images/'.$img));
-            $categorie->image =  $img;
-        }
-
+    $categorie->name = $request->name;
+       
         if ($request->file('icon')) {
             @unlink(public_path('/icons/'.$categorie->icon));
             $file = $request->file('icon');
@@ -208,9 +201,14 @@ class CategorieController extends Controller
             $categorie->icon =  $icn;
         }
 
-        
-        $categorie->name = $request->name;
-
+        if ($request->file('image')) {
+            @unlink(public_path('/images/'.$categorie->image));
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $img = 'image_'.$categorie->id.'.'.$extension;
+            Image::make($file)->save(public_path('/images/'.$img));
+            $categorie->image =  $img;
+        }
         
         $categorie->save();
 
