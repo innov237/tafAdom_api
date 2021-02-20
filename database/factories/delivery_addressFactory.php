@@ -2,16 +2,17 @@
 
 namespace Database\Factories;
 
+use App\Models\delivery_address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ModelFactory extends Factory
+class delivery_addressFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = \App\Models\categorie::class;
+    protected $model = delivery_address::class;
 
     /**
      * Define the model's default state.
@@ -21,10 +22,11 @@ class ModelFactory extends Factory
     public function definition()
     {
         return [
-            // 
-            "name" => $faker->unique()->name,
-            "icon" => "default.jpeg",
-            "image" => "default.jpeg"
+            //
+            "quater" => $this->faker->city,
+            "user_id" => rand(1,30),
+            "city_id" => rand(1,7),
+            "phone_number" => $this->faker->unique()->e164PhoneNumber, 
         ];
     }
 }

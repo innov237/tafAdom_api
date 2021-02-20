@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\service_request;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ServiceRequestFactory extends Factory
+class service_requestFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -23,11 +23,11 @@ class ServiceRequestFactory extends Factory
     {
         return [
             //
-            "data_solicitation" => $faker->date(),
+            "data_solicitation" => $this->faker->date(),
             "user_id" => rand(1,30),
             "delivery_address_id" => rand(1,30),
             "service_id" => rand(1,30),
-            "time_solicitation" => $faker->unixTime(),
+            "time_solicitation" => $this->faker->unixTime(),
         ]; 
     }
 }

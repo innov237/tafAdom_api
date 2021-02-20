@@ -2,17 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Models\service_provider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ServiceProviderFactory extends Factory
+class categorieFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = service_provider::class;
+    protected $model = \App\Models\categorie::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +21,10 @@ class ServiceProviderFactory extends Factory
     public function definition()
     {
         return [
-            //
-            "id_service" => rand(1,30),
-            "id_provider" => rand(1,30),
+            // 
+            "name" => $this->faker->unique()->name,
+            "icon" => "default.jpeg",
+            "image" => "default.jpeg"
         ];
     }
 }

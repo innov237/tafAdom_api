@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\delivery_address;
+use App\Models\delivery_request_review;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DeliveryAddressFactory extends Factory
+class delivery_request_reviewFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = delivery_address::class;
+    protected $model = delivery_request_review::class;
 
     /**
      * Define the model's default state.
@@ -23,10 +23,8 @@ class DeliveryAddressFactory extends Factory
     {
         return [
             //
-            "quater" => $faker->city,
-            "user_id" => rand(1,30),
-            "city_id" => rand(1,7),
-            "phone_number" => $faker->unique()->e164PhoneNumber, 
+            "mark" => rand(1,16),
+            "delivery_request_id" => rand(1,16),
         ];
     }
 }

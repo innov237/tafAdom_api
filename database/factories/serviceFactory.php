@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\delivery_request_review;
+use App\Models\service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DeliveryRequestReviewFactory extends Factory
+class serviceFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = delivery_request_review::class;
+    protected $model = service::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,11 @@ class DeliveryRequestReviewFactory extends Factory
     {
         return [
             //
-            "mark" => rand(1,16),
-            "delivery_request_id" => rand(1,16),
+            "name" => $this->faker->unique()->firstName,
+            "icon" => "default.jpeg",
+            "image" => "default.jpeg",
+            "minimal_price" => rand(1000, 150000),
+            "categorie_id" => rand(1,30),
         ];
     }
 }

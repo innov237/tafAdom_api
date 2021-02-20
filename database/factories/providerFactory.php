@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ModelFactory extends Factory
+class providerFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,9 +22,9 @@ class ModelFactory extends Factory
     {
         return [
             //
-            "name" => $faker->unique()->firstName,
-            "phone_number" => $faker->unique()->e164PhoneNumber,
-            "email" => $faker->unique()->safeEmail,
+            "name" => $this->faker->unique()->firstName,
+            "phone_number" => $this->faker->unique()->e164PhoneNumber,
+            "email" => $this->faker->unique()->safeEmail,
         ];
     }
 }

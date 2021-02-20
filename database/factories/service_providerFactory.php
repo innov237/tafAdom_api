@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\discounted_service;
+use App\Models\service_provider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DiscountServiceFactory extends Factory
+class service_providerFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = discounted_service::class;
+    protected $model = service_provider::class;
 
     /**
      * Define the model's default state.
@@ -23,10 +23,8 @@ class DiscountServiceFactory extends Factory
     {
         return [
             //
-            "started_date" => $faker->date(),
-            "end_date" => $faker->date(),
-            "reduction" => rand(1,99),
-            "service_id" => rand(1,30),
+            "id_service" => rand(1,30),
+            "id_provider" => rand(1,30),
         ];
     }
 }
