@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Image;
 
 class CategorieController extends Controller
-{
+{   
+
+    public function __construct() {
+        $this->middleware('admin.verify', ['only' => ['index']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -135,12 +139,8 @@ class CategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name'=>'required|string|max:30',
-            'image'=>'required',
-        ]);
-    
-       // return response()->json(['name' => request('name') , 'data'=> $categorie]);
+       
+      return response()->json(['name' => request('name') , 'data'=> $categorie]);
     /**
      * @OA\Patch(
      *   path="/api/categorie/{categorie} ",

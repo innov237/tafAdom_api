@@ -12,7 +12,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
-    protected $appends = ['city'];
+    protected $appends = ['city', 'role'];
 
     public function service_request()
     {
@@ -71,8 +71,26 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function town(){
+        return $this->belongsTo(cities::class, 'cities_id');
+    }
+
+    public function getRoleAttribute(){
+        return Role::where('id', $this->role_id)->first();
+    }
+
     public function getCityAttribute(){
         return cities::where('id', $this->cities_id)->first();
-    } 
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role');
+    }
+
+    public function isAdmin(){   
+
+        return $this->role->rank >= Role::find(Role::ADMIN)->rank;
+    }
 
 }

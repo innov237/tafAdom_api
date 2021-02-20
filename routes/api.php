@@ -36,6 +36,7 @@ Route::group([
 
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/admin/login', [AuthController::class, 'loginAdmin']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
@@ -43,8 +44,7 @@ Route::group([
 });
 
 
-Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
-Route::get('serviceRequest/town/{town?}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
+
 
 Route::apiResource('categorie',CategorieController::class);
 Route::apiResource('user',UserController::class);
@@ -56,3 +56,13 @@ Route::apiResource('city',CitiesController::class);
 Route::apiResource('deliveryAddress',DeliveryAddress::class);
 Route::apiResource('deliveryServiceRequest',DeliveryServiceRequestController::class);
 Route::apiResource('discounted',DiscountedServiceController::class);
+
+
+Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
+Route::get('serviceRequest/town/{town}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
+
+Route::get('serviceRequest/user/{uuid}/status/{status?}', [ServiceRequestController::class, 'filterCommandByUser']);
+
+Route::get('serviceRequest/service/{uuid}/', [ServiceProviderController::class, 'filterByService']);
+
+Route::get('deliveryAddress/user/{uuid}/', [DeliveryAddress::class, 'filterAddressByUser']);

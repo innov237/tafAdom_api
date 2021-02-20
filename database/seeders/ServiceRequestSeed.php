@@ -19,7 +19,7 @@ class ServiceRequestSeed extends Seeder
         for( $i=0;   $i <= 15; $i++){
             \App\Models\service_request::create([
                 "data_solicitation" => $faker->date(),
-                "user_id" => rand(1,16),
+                "user_id" => rand(1,15),
                 "delivery_address_id" => rand(1,15),
                 "service_id" => rand(1,15),
                 "time_solicitation" => $faker->unixTime(),

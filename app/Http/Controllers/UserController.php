@@ -23,11 +23,11 @@ class UserController extends Controller
     public function indexByTown(Request $request, $id)
     {
         //
-        $sr = User::whereHas('city', function($q) use ($id) {
+        $sr = User::whereHas('town', function($q) use ($id) {
               $q->where('id', $id);
-          })->with(['city'])->orderBy('id', 'DESC')->paginate(8);
+          })->orderBy('id', 'DESC')->paginate(8);
         return  $sr->toJson(JSON_PRETTY_PRINT);
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.
@@ -73,6 +73,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
+        return $user;
     }
 
     /**

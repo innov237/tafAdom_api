@@ -26,12 +26,12 @@ class DatabaseSeeder extends Seeder
             CategorieSeeder::class,
             ServiceSeeder::class,
             
-
             DelivryAddreSeed::class,
             ServiceRequestSeed::class,
             DeliveryServiceRequestSeed::class,
             ServiceProviderSeed::class,
-            DiscountServiceSeed::class
+            DiscountServiceSeed::class,
+            DelivryRequestReviewSeed::class
 
         ]);
 

@@ -15,7 +15,13 @@ class ServiceProviderController extends Controller
      */
     public function index()
     {
-        $service_provider=DB::table('service_provisers')->get();
+        $service_provider = service_provider::with(['provider','service'])->orderBy('id', 'DESC')->paginate(8);
+        return  $service_provider->toJson(JSON_PRETTY_PRINT);
+    }
+
+    public function filterByService(Request $request, $uuid)
+    {
+        $service_provider = service_provider::services($uuid)->with(['provider','service'])->orderBy('id', 'DESC')->paginate(8);
         return  $service_provider->toJson(JSON_PRETTY_PRINT);
     }
 

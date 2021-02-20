@@ -19,8 +19,10 @@ class CreateDeliveryServicesRequestsTable extends Migration
             $table->string("status");
             $table->BigInteger('service_request_id')->unsigned();
             $table->BigInteger('provider_id')->unsigned();
+            $table->BigInteger('delivery_address_id')->unsigned();
             $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
             $table->foreign('service_request_id')->references('id')->on('service_requests')->onDelete('cascade');
+            $table->foreign('delivery_address_id')->references('id')->on('delivery_addresses')->onDelete('cascade');
             $table->timestamps();
         });
     }

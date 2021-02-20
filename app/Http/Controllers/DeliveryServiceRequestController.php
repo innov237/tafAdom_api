@@ -91,17 +91,26 @@ class DeliveryServiceRequestController extends Controller
      * )
      */
 
-    $this->validate($request,[
-        'amout'=>'required',
-        'status'=>'required',
-        'delivery_address_id'=>'required',
-        
-    ]);
+    
         $deliverySR = new delivery_service_request;
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
+        $deliverySR->provider_id = $request->provider_id;
+        $deliverySR->service_request_id = $request->service_request_id;
         $deliverySR->delivery_address_id = $request->delivery_address_id;
         $deliverySR->save();
+
+        $deliverySR = delivery_services_request::find(1);
+
+        $user = $deliverySR->address()->owner();
+
+        $this->mail([
+            'title' => 'Mail from ItSolutionStuff.com',
+            'body' => ( 1 == $request->status) ? 'La request à été prise en cours' : 'Requete terminée',
+            'email' => $user->email
+        ]);
+
+        return response()->json(['Request effectuée avec success'],200);
     }
 
     /**
@@ -110,9 +119,11 @@ class DeliveryServiceRequestController extends Controller
      * @param  \App\Models\delivery_service_request  $delivery_service_request
      * @return \Illuminate\Http\Response
      */
-    public function show(delivery_service_request $delivery_service_request)
+    public function show(Request $request, delivery_services_request $deliveryServiceRequest)
     {
         //
+
+        return $deliveryServiceRequest;
     }
 
     /**
@@ -122,7 +133,7 @@ class DeliveryServiceRequestController extends Controller
      * @param  \App\Models\delivery_service_request  $delivery_service_request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id, delivery_service_request $delivery_service_request)
+    public function update(Request $request, delivery_services_request $deliveryServiceRequest)
     {
 
   /**
@@ -174,11 +185,10 @@ class DeliveryServiceRequestController extends Controller
      */
 
 
-        $deliverySR = delivery_service_request::find($id);
-        $deliverySR->amout = $request->amout;
-        $deliverySR->status = $request->status;
-        $deliverySR->delivery_address_id = $request->delivery_address_id;
-        $deliverySR->save();
+        $credentials = $request->only(['amout', 'delivery_address_id', 'status']);
+
+        $deliveryServiceRequest->update($credentials);
+
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
     }
