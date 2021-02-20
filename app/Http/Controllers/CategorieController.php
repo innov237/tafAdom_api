@@ -11,9 +11,6 @@ use Intervention\Image\Facades\Image;
 class CategorieController extends Controller
 {   
 
-    public function __construct() {
-        $this->middleware('admin.verify', ['only' => ['index']]);
-    }
     /**
      * Display a listing of the resource.
      *
