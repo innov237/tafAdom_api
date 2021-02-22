@@ -15,20 +15,39 @@ class ProviderController extends Controller
      */
     public function index()
     {
-/**
- * @OA\Get(
- *     path="/api/provider",
- *     tags={"provider"},
- *     summary="return a list of provider",
- *     description="list of provider",
- *     @OA\Response(response="200",
- *       description="a json array of provider"),
- *     @OA\Schema(type="json", items="string"),
- *     
- * )
- */
+        /**
+         * @OA\Get(
+         *     path="/api/provider",
+         *     tags={"provider"},
+         *     summary="return a list of provider",
+         *     description="list of provider",
+         *     @OA\Response(response="200",
+         *       description="a json array of provider"),
+         *     @OA\Schema(type="json", items="string"),
+         *     
+         * )
+         */
 
         $provider = provider::orderBy('id', 'DESC')->paginate(8);
+        return  $provider->toJson(JSON_PRETTY_PRINT);
+    }
+
+    public function fiterByCity(Request $response, $uuid)
+    {
+        /**
+         * @OA\Get(
+         *     path="/api/provider",
+         *     tags={"provider"},
+         *     summary="return a list of provider",
+         *     description="list of provider",
+         *     @OA\Response(response="200",
+         *       description="a json array of provider"),
+         *     @OA\Schema(type="json", items="string"),
+         *     
+         * )
+         */
+
+        $provider = provider::where('cities_id', $uuid)->orderBy('id', 'DESC')->paginate(8);
         return  $provider->toJson(JSON_PRETTY_PRINT);
     }
 

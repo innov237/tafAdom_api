@@ -69,5 +69,6 @@ Route::get('serviceRequest/service/{service}/town/{town}', [ServiceProviderContr
 
 Route::get('deliveryAddress/user/{uuid}/', [DeliveryAddress::class, 'filterAddressByUser']);
 
+Route::get('provider/city/{uuid}', [ProviderController::class, 'fiterByCity']);
 
 Route::get('service/categorie/{uuid}/', [ServiceController::class, 'filterServiceByCategorie']);
