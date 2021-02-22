@@ -18,6 +18,4 @@ Route::get('/m', function () {
     return view('create_cat');
 });
 
-Route::put('categorie/update/{id}', [CategorieController::class,'update', 'as'=>'update']);
-Route::get('/up',[CategorieController::class,'edit']);
 
