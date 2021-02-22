@@ -25,6 +25,12 @@ class ServiceProviderController extends Controller
         return  $service_provider->toJson(JSON_PRETTY_PRINT);
     }
 
+    public function filterByServiceAndTown(Request $request, $service=0 , $town=0)
+    {
+        $service_provider = service_provider::services($uuid)->with(['provider','service'])->orderBy('id', 'DESC')->paginate(8);
+        return  $service_provider->toJson(JSON_PRETTY_PRINT);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -25,6 +25,7 @@ class providerFactory extends Factory
             "name" => $this->faker->unique()->firstName,
             "phone_number" => $this->faker->unique()->e164PhoneNumber,
             "email" => $this->faker->unique()->safeEmail,
+            "cities_id" => rand(1,7),
         ];
     }
 }
