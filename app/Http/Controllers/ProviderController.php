@@ -96,6 +96,7 @@ class ProviderController extends Controller
         $provider = new provider;
         $provider->name = $request->name;
         $provider->email = $request->email;
+        $provider->cities = $request->cities;
         $provider->phone_number = $request->phone_number;
         $provider->save();
     }
