@@ -26,8 +26,30 @@ class ServiceProviderController extends Controller
     }
 
     public function filterByServiceAndTown(Request $request, $service=0 , $town=0)
-    {
-        $service_provider = service_provider::services($uuid)->with(['provider','service'])->orderBy('id', 'DESC')->paginate(8);
+    {   
+        $service_provider = null;
+        if (0 == $town && 0 == $service )
+            $service_provider = service_provider::with(['provider','service'])->orderBy('id', 'DESC')->paginate(8);
+
+
+        if (0 == $town && $service )
+            $service_provider = service_provider::services($service)->with(['provider','service'])->orderBy('id', 'DESC')->paginate(8);
+
+        if ( $town && 0 == $service )
+            $service_provider = service_provider::whereHas('provider', function($q) use ($town){
+                $q->where('cities_id', $town);
+            })
+            ->with(['provider','service'])->orderBy('id', 'DESC')->paginate(8);
+
+        if ( $town && $service )
+            $service_provider = service_provider::whereHas('provider', function($q) use ($town){
+                $q->where('cities_id', $town);
+            })
+            ->whereHas('service', function($q) use ($service){
+                $q->where('id_service', $service);
+            })
+            ->with(['provider','service'])->orderBy('id', 'DESC')->paginate(8);
+
         return  $service_provider->toJson(JSON_PRETTY_PRINT);
     }
 
