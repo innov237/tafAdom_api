@@ -107,7 +107,12 @@ class DeliveryAddress extends Controller
      *   ),
      * )
      */
-
+    $this->validate($request,[
+        'quater'=>'required|string|max:30',
+        'phone_number'=>'required',
+        'user_id'=>'required',
+        'city_id'=>'required',
+    ]);
 
         $delivery_address = new delivery_address;
         $delivery_address->quater= $request->quater;
@@ -139,6 +144,12 @@ class DeliveryAddress extends Controller
      */
     public function update(Request $request,$id)
     {
+        $this->validate($request,[
+            'quater'=>'required|string|max:30',
+            'phone_number'=>'required',
+            'user_id'=>'required',
+            'city_id'=>'required',
+        ]);
  /**
      * @OA\Patch(
      *   path="/api/deliveryAddress/{deliveryAddress} ",

@@ -61,6 +61,10 @@ class ServiceProviderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'id_service'=>'required|max:30',
+            'id_provider'=>'required',
+        ]);
         $service_provider = new service_provider;
         $service_provider->id_service = $request->id_service;
         $service_provider->id_provider  = $request->id_provider ;
@@ -89,6 +93,10 @@ class ServiceProviderController extends Controller
      */
     public function update(Request $request, service_provider $service_provider)
     {
+        $this->validate($request,[
+            'id_service'=>'required|max:30',
+            'id_provider'=>'required',
+        ]);
         $categorie = service_provider::find($id);
         $service_provider->id_service = $request->id_service;
         $service_provider->id_provider  = $request->id_provider ;

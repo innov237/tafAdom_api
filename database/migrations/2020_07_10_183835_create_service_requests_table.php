@@ -16,6 +16,8 @@ class CreateServiceRequestsTable extends Migration
         Schema::create('service_requests', function (Blueprint $table) {
             $table->id();
             $table->date("data_solicitation");
+            $table->time("solicitation_hour");
+            $table->integer("days_remaining");
             $table->BigInteger('service_id')->unsigned();
             $table->BigInteger('user_id')->unsigned();
             $table->BigInteger('delivery_address_id')->unsigned();
