@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 "residence" => $faker->firstName,
                 "prenom" => $faker->firstName,
                 "telephone" => $faker->unique()->e164PhoneNumber,
-                "cities_id" => rand(1,4),
+                "cities_id" => rand(1,7),
                 "email" => $faker->unique()->safeEmail,
                 "password" => bcrypt("password")
             ]);

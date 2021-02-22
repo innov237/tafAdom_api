@@ -7,8 +7,9 @@ use App\Models\categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Image;
 
-use Intervention\Image\Facades\Image;
+
 
 class ServiceController extends Controller
 {

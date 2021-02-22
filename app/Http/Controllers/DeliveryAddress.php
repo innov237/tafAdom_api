@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\delivery_address;
 use Illuminate\Http\Request;
 
+
 class DeliveryAddress extends Controller
 {
     /**
@@ -27,7 +28,16 @@ class DeliveryAddress extends Controller
  * )
  */
         
-        $delivery_address = DB::table('delivery_address')->get();
+        $delivery_address = delivery_address::with(['user', 'city'])->paginate(8);
+        return   $delivery_address->toJson(JSON_PRETTY_PRINT);
+    }
+
+
+    public function filterAddressByUser(Request $request, $id){
+        $delivery_address = delivery_address::whereHas('user', function($q) use ($id) {
+                $q->where('id', $id);
+        })
+            ->with(['user', 'city'])->paginate(8);
         return   $delivery_address->toJson(JSON_PRETTY_PRINT);
     }
 

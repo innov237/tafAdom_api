@@ -21,8 +21,8 @@ class DelivryAddreSeed extends Seeder
         for( $i=0;   $i <= 15; $i++){
             \App\Models\delivery_address::create([
                 "quater" => $faker->firstName,
-                "user_id" => rand(1,16),
-                "city_id" => rand(1,4),
+                "user_id" => rand(1,15),
+                "city_id" => rand(1,7),
                 "phone_number" => $faker->unique()->e164PhoneNumber,
             ]);
         }
