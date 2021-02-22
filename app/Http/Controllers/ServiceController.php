@@ -20,20 +20,37 @@ class ServiceController extends Controller
     {
 
                 /**
- * @OA\Get(
- *     path="/api/service",
- *     tags={"service"},
- *     summary="return a list of services",
- *     description="list of services",
- *     @OA\Response(response="200",
- *       description="a json array of services"),
- *     @OA\Schema(type="json", items="string"),
- *     
- * )
- */
+     * @OA\Get(
+     *     path="/api/service",
+     *     tags={"service"},
+     *     summary="return a list of services",
+     *     description="list of services",
+     *     @OA\Response(response="200",
+     *       description="a json array of services"),
+     *     @OA\Schema(type="json", items="string"),
+     *     
+     * )
+     */
         $service = service::with(['categorie'])->orderBy('id', 'DESC')->paginate(8);
         return  $service->toJson(JSON_PRETTY_PRINT);
         }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filterServiceByCategorie(Request $request, $uuid)
+    {
+        $service = null ;
+        if ($uuid)
+            $service = service::whereHas('categorie', function($q) use ($uuid) {
+                $q->where('id', $uuid); 
+            })->with(['categorie'])->orderBy('id', 'DESC')->paginate(8);
+        else
+             $service = service::with(['categorie'])->orderBy('id', 'DESC')->paginate(8);
+        return  $service->toJson(JSON_PRETTY_PRINT);
+    }
 
     /**
      * Store a newly created resource in storage.

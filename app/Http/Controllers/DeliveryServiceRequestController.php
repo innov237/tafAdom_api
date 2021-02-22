@@ -103,11 +103,14 @@ class DeliveryServiceRequestController extends Controller
 
         $user = $deliverySR->address()->owner();
 
-        $this->mail([
-            'title' => 'Mail from ItSolutionStuff.com',
+        $app = config('mail.from.address');
+
+       /* $this->mail([
+            'title' => "Mail from {$app}",
             'body' => ( 1 == $request->status) ? 'La request à été prise en cours' : 'Requete terminée',
-            'email' => $user->email
-        ]);
+            'to_email' => $user->email,
+            'from_email' => config('mail.from.address')
+        ]);*/
 
         return response()->json(['Request effectuée avec success'],200);
     }

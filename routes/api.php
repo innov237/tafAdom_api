@@ -59,10 +59,12 @@ Route::apiResource('discounted',DiscountedServiceController::class);
 
 
 Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
+
 Route::get('serviceRequest/town/{town}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
-
 Route::get('serviceRequest/user/{uuid}/status/{status?}', [ServiceRequestController::class, 'filterCommandByUser']);
-
 Route::get('serviceRequest/service/{uuid}/', [ServiceProviderController::class, 'filterByService']);
 
 Route::get('deliveryAddress/user/{uuid}/', [DeliveryAddress::class, 'filterAddressByUser']);
+
+
+Route::get('service/categorie/{uuid}/', [ServiceController::class, 'filterServiceByCategorie']);
