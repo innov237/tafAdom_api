@@ -74,12 +74,12 @@ class ServiceRequestController extends Controller
                 $sr = null;
                 
                 if ( 3 == $status){
-                    $sr = service_request::whereHas('serviceUser')->whereHas('serviceProcessing', function($q) use ($uuid) {
+                    $sr = service_request::whereHas('serviceProcessing', function($q) use ($uuid) {
                             $q->where('provider_id', $uuid);
                     })
                     ->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
                 }else{
-                    $sr = service_request::whereHas('serviceUser')->whereHas('serviceProcessing', function($q) use ($status, $uuid) {
+                    $sr = service_request::whereHas('serviceProcessing', function($q) use ($status, $uuid) {
                             $q->where([
                                 ['status', $status],
                                 ['provider_id', $uuid]
@@ -92,8 +92,11 @@ class ServiceRequestController extends Controller
                 return  $sr->toJson(JSON_PRETTY_PRINT);
             }
 
-            $sr = service_request::whereHas('serviceUser', function($q) use ($uuid) {
-                        $q->where('id', $uuid);
+            $sr = service_request::whereHas('serviceProcessing', function($q) use ($uuid) {
+                        $q->where([
+                            ['delivery_services_requests.provider_id', $uuid],
+
+                        ]);
                 })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
             
             return  $sr->toJson(JSON_PRETTY_PRINT);
