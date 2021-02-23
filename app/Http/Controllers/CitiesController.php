@@ -39,6 +39,9 @@ class CitiesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name'=>'required|max:30',
+        ]);
 
  /**
      * @OA\Post(
@@ -91,6 +94,9 @@ class CitiesController extends Controller
      */
     public function update(Request $request,$id, cities $cities)
     {
+        $this->validate($request,[
+            'name'=>'required|max:30',
+        ]);
  /**
      * @OA\Patch(
      *   path="/api/city/{city} ",

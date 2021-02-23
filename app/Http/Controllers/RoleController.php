@@ -15,7 +15,7 @@ class RoleController extends Controller
     public function index()
     {
         //
-        return Role::all()->paginate(8)
+        return Role::all()->paginate(8);
     }
 
     /**

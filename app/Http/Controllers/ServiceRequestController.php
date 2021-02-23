@@ -67,6 +67,43 @@ class ServiceRequestController extends Controller
 
         }
 
+        public function filterCommandByProvider(Request $request, $uuid, $status = null)
+        {   
+
+            if ($status && $status>=1 && $status <=3){
+                $sr = null;
+                
+                if ( 3 == $status){
+                    $sr = service_request::whereHas('serviceProcessing', function($q) use ($uuid) {
+                            $q->where('provider_id', $uuid);
+                    })
+                    ->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+                }else{
+                    $sr = service_request::whereHas('serviceProcessing', function($q) use ($status, $uuid) {
+                            $q->where([
+                                ['status', $status],
+                                ['provider_id', $uuid]
+                            ]);
+                    })
+                    ->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+                }   
+                
+            
+                return  $sr->toJson(JSON_PRETTY_PRINT);
+            }
+
+            $sr = service_request::whereHas('serviceProcessing', function($q) use ($uuid) {
+                        $q->where([
+                            ['delivery_services_requests.provider_id', $uuid],
+
+                        ]);
+                })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+            
+            return  $sr->toJson(JSON_PRETTY_PRINT);
+            
+
+        }
+
         public function filterCommand(Request $request, $town = 0, $status = 0)
         {
 
@@ -137,6 +174,12 @@ class ServiceRequestController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'data_solicitation'=>'required|max:30',
+            'provider_id'=>'required',
+            'time_solicitation'=>'required',
+            'delivery_request_price_id'=>'required',
+        ]);
 /**
      * @OA\Post(
      *   path="/api/serviceRequest",
@@ -197,9 +240,9 @@ class ServiceRequestController extends Controller
 
         $service_r = new service_request;
         $service_r->data_solicition = $request->data_solicition ;
-        $service_r->provider_id = 1;
+        $service_r->provider_id = $request->provider_id;
         $service_r->time_solicitation = $request->time_solicitation;
-        $service_r->delivery_request_price_id = 1;
+        $service_r->delivery_request_price_id = $request->delivery_request_price_id;
         $service_r->save();
 
     }

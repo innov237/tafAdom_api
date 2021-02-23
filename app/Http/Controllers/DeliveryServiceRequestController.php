@@ -41,6 +41,7 @@ class DeliveryServiceRequestController extends Controller
      */
     public function store(Request $request)
     {
+        
  /**
      * @OA\Post(
      *   path="/api/deliveryServiceRequest",
@@ -90,8 +91,8 @@ class DeliveryServiceRequestController extends Controller
      * )
      */
 
-
-        $deliverySR = new delivery_services_request;
+    
+        $deliverySR = new delivery_service_request;
         $deliverySR->amout = $request->amout;
         $deliverySR->status = $request->status;
         $deliverySR->provider_id = $request->provider_id;
