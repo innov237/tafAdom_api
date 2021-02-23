@@ -6,6 +6,8 @@ use App\Models\provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Image;
+
 class ProviderController extends Controller
 {
     /**
@@ -65,7 +67,7 @@ class ProviderController extends Controller
             'phone_number'=>'required',
         ]);
 
-/**
+    /**
      * @OA\Post(
      *   path="/api/provider",
      *   tags={"provider"},
@@ -116,7 +118,21 @@ class ProviderController extends Controller
         $provider->name = $request->name;
         $provider->email = $request->email;
         $provider->phone_number = $request->phone_number;
+
         $provider->save();
+
+        if ( $request->hasFile('profile_picture') && $request->file('profile_picture')->isValid()){
+        //
+            $file = $request->file('profile_picture');
+            $extension = $file->getClientOriginalExtension();
+            $img = 'profile_'.$provider->id.'.'.$extension;
+            Image::make($file)->save(public_path('/profiles/'.$img));
+            $provider->profile_picture = $img;
+        }
+
+        $provider->save();
+
+        return response()->json(['succes'=> true]);
     }
 
     /**
@@ -195,10 +211,22 @@ class ProviderController extends Controller
      */
 
         $provider = provider::find($id);
+
+
+        if ( $request->hasFile('profile_picture') && $request->file('profile_picture')->isValid()){
+          @unlink(public_path('/profiles/'.$provider->profile_picture));
+          
+          $file = $request->file('profile_picture');
+          $extension = $file->getClientOriginalExtension();
+          $img = 'image_'.$provider->id.'.'.$extension;
+          Image::make($file)->save(public_path('/profiles/'.$img));
+          $provider->profile_picture =  $img;
+       }
         $provider->name = $request->name;
         $provider->email = $request->email;
         $provider->phone_number = $request->phone_number;
-        $provider->save();
+        
+        $provider->save(); 
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
     }
