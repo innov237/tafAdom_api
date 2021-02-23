@@ -67,6 +67,40 @@ class ServiceRequestController extends Controller
 
         }
 
+        public function filterCommandByProvider(Request $request, $uuid, $status = null)
+        {   
+
+            if ($status && $status>=1 && $status <=3){
+                $sr = null;
+                
+                if ( 3 == $status){
+                    $sr = service_request::whereHas('serviceUser')->whereHas('serviceProcessing', function($q) use ($uuid) {
+                            $q->where('provider_id', $uuid);
+                    })
+                    ->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+                }else{
+                    $sr = service_request::whereHas('serviceUser')->whereHas('serviceProcessing', function($q) use ($status, $uuid) {
+                            $q->where([
+                                ['status', $status],
+                                ['provider_id', $uuid]
+                            ]);
+                    })
+                    ->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+                }   
+                
+            
+                return  $sr->toJson(JSON_PRETTY_PRINT);
+            }
+
+            $sr = service_request::whereHas('serviceUser', function($q) use ($uuid) {
+                        $q->where('id', $uuid);
+                })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+            
+            return  $sr->toJson(JSON_PRETTY_PRINT);
+            
+
+        }
+
         public function filterCommand(Request $request, $town = 0, $status = 0)
         {
 

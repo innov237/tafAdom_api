@@ -128,6 +128,7 @@ class ProviderController extends Controller
     public function show(provider $provider)
     {
         //
+        return $provider;
     }
 
     /**

@@ -63,6 +63,8 @@ Route::get('user/town/{id}', [UserController::class, 'indexByTown']);
 Route::get('serviceRequest/town/{town}/status/{status?}', [ServiceRequestController::class, 'filterCommand']);
 Route::get('serviceRequest/user/{uuid}/status/{status?}', [ServiceRequestController::class, 'filterCommandByUser']);
 
+Route::get('serviceRequest/provider/{uuid}/status/{status?}', [ServiceRequestController::class, 'filterCommandByProvider']);
+
 Route::get('serviceRequest/service/{uuid}/', [ServiceProviderController::class, 'filterByService']);
 
 Route::get('serviceRequest/service/{service}/town/{town}', [ServiceProviderController::class, 'filterByServiceAndTown']);
@@ -72,3 +74,5 @@ Route::get('deliveryAddress/user/{uuid}/', [DeliveryAddress::class, 'filterAddre
 Route::get('provider/city/{uuid}', [ProviderController::class, 'fiterByCity']);
 
 Route::get('service/categorie/{uuid}/', [ServiceController::class, 'filterServiceByCategorie']);
+
+Route::get('categorie/service/{uuid}/', [CategorieController::class, 'filterCategoryByService']);

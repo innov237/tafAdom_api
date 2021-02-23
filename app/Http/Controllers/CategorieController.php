@@ -18,19 +18,28 @@ class CategorieController extends Controller
     public function index()
     {
         /**
- * @OA\Get(
- *     path="/api/categorie",
- *     tags={"categories"},
- *     summary="return a list of categories",
- *     description="list of categories",
- *     @OA\Response(response="200",
- *       description="a json array of categories"),
- *     @OA\Schema(type="json", items="string"),
- *
- * )
- */
+         * @OA\Get(
+         *     path="/api/categorie",
+         *     tags={"categories"},
+         *     summary="return a list of categories",
+         *     description="list of categories",
+         *     @OA\Response(response="200",
+         *       description="a json array of categories"),
+         *     @OA\Schema(type="json", items="string"),
+         *
+         * )
+        */
 
         $categorie = categorie::with(['service'])->orderBy('id', 'DESC')->paginate(8);
+        return $this->reply(true,null, $categorie);
+    }
+
+     public function filterCategoryByService(Request $request, $service)
+    {
+        
+        $categorie = categorie::whereHas('service', function($q) use ($service){
+            $q->where('id', $service);
+        })->with(['service'])->orderBy('id', 'DESC')->paginate(8);
         return $this->reply(true,null, $categorie);
     }
 
