@@ -65,6 +65,7 @@ class ProviderController extends Controller
             'name'=>'required|string|max:30',
             'email'=>'required|email|unique:users,email',
             'phone_number'=>'required',
+            'cities_id'=>'required',
         ]);
 
     /**
@@ -116,6 +117,7 @@ class ProviderController extends Controller
 
         $provider = new provider;
         $provider->name = $request->name;
+        $provider->cities_id = $request->cities_id;
         $provider->email = $request->email;
         $provider->phone_number = $request->phone_number;
 
