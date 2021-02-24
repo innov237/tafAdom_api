@@ -82,6 +82,8 @@ class ServiceProviderController extends Controller
     public function show(service_provider $service_provider)
     {
         //
+
+
     }
 
     /**
@@ -97,7 +99,7 @@ class ServiceProviderController extends Controller
             'id_service'=>'required|max:30',
             'id_provider'=>'required',
         ]);
-        $categorie = service_provider::find($id);
+        
         $service_provider->id_service = $request->id_service;
         $service_provider->id_provider  = $request->id_provider ;
         $service_provider->save();
