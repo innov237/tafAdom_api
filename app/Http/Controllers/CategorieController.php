@@ -146,7 +146,6 @@ class CategorieController extends Controller
     public function update(Request $request, $id)
     {
        
-      return response()->json(['name' => request('name') , 'data'=> $categorie]);
     /**
      * @OA\Patch(
      *   path="/api/categorie/{categorie} ",

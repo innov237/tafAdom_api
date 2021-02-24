@@ -213,7 +213,7 @@ class ServiceController extends Controller
      *   ),
      * )
      */
-        $service = Service::find($id);
+        
 
         if($request->file('image')){
           @unlink(public_path('/images/'.$service->image));
