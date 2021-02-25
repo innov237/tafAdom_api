@@ -34,3 +34,4 @@ class service extends Model
         return $this->belongsTo(categorie::class);
     }
 }
+ 

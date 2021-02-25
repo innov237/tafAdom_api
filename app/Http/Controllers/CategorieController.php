@@ -54,6 +54,7 @@ class CategorieController extends Controller
         $this->validate($request,[
             'name'=>'required|string|max:30',
             'image'=>'required',
+            'icon'=>'required',
         ]);
         /**
          * @OA\Post(
@@ -101,24 +102,24 @@ class CategorieController extends Controller
          */
 
         $categorie = new categorie;
-        
-        $categorie->name = $request->name;    
 
-       $file = $request->file('icon');
-       $extension = $file->getClientOriginalExtension();
-       $icn = 'icon_'.$categorie->id.'.'.$extension;
-       Image::make($file)->resize(122,122)->save(public_path('/icons/'.$icn));
-       $categorie->icon = $icn;
+        $categorie->name = $request->name;
+        $categorie->image = "default.jpeg";
+        $categorie->icon = "default.jpeg";    
+        $categorie->save();
+       
+        $file = $request->file('icon');
+        $extension = $file->getClientOriginalExtension();
+        $icn = 'icon_'.$categorie->id.'.'.$extension;
+        Image::make($file)->resize(122,122)->save(public_path('/icons/'.$icn));
+        $categorie->icon = $icn;
 
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
         $img = 'image_'.$categorie->id.'.'.$extension;
         Image::make($file)->save(public_path('/images/'.$img));
         $categorie->image = $img;
-        $categorie->save();
-
-   
-
+        
         $categorie->save();
 
         return $this->reply(true,"bien enregistré",null);
