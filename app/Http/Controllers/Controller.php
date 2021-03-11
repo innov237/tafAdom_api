@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+
 /**
  * @OA\Info(
  *    title="Your super  ApplicationAPI",
@@ -41,7 +42,7 @@ class Controller extends BaseController
     }
 
     public function mail($credentials){
-        \Mail::to($credentials['email'])->send(new \App\Mail\MailServiceNotification($credentials));
+        \Mail::to($credentials['to_email'])->queue(new \App\Mail\MailServiceNotification($credentials));
    
     
     }

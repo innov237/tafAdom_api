@@ -6,6 +6,8 @@ use App\Models\provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Image;
+
 class ProviderController extends Controller
 {
     /**
@@ -15,20 +17,39 @@ class ProviderController extends Controller
      */
     public function index()
     {
-/**
- * @OA\Get(
- *     path="/api/provider",
- *     tags={"provider"},
- *     summary="return a list of provider",
- *     description="list of provider",
- *     @OA\Response(response="200",
- *       description="a json array of provider"),
- *     @OA\Schema(type="json", items="string"),
- *     
- * )
- */
+        /**
+         * @OA\Get(
+         *     path="/api/provider",
+         *     tags={"provider"},
+         *     summary="return a list of provider",
+         *     description="list of provider",
+         *     @OA\Response(response="200",
+         *       description="a json array of provider"),
+         *     @OA\Schema(type="json", items="string"),
+         *     
+         * )
+         */
 
-        $provider = DB::table('providers')->orderBy('id', 'DESC')->paginate(8);
+        $provider = provider::orderBy('id', 'DESC')->paginate(8);
+        return  $provider->toJson(JSON_PRETTY_PRINT);
+    }
+
+    public function fiterByCity(Request $response, $uuid)
+    {
+        /**
+         * @OA\Get(
+         *     path="/api/provider",
+         *     tags={"provider"},
+         *     summary="return a list of provider",
+         *     description="list of provider",
+         *     @OA\Response(response="200",
+         *       description="a json array of provider"),
+         *     @OA\Schema(type="json", items="string"),
+         *     
+         * )
+         */
+
+        $provider = provider::where('cities_id', $uuid)->orderBy('id', 'DESC')->paginate(8);
         return  $provider->toJson(JSON_PRETTY_PRINT);
     }
 
@@ -44,9 +65,10 @@ class ProviderController extends Controller
             'name'=>'required|string|max:30',
             'email'=>'required|email|unique:users,email',
             'phone_number'=>'required',
+            'cities_id'=>'required',
         ]);
 
-/**
+    /**
      * @OA\Post(
      *   path="/api/provider",
      *   tags={"provider"},
@@ -95,9 +117,24 @@ class ProviderController extends Controller
 
         $provider = new provider;
         $provider->name = $request->name;
+        $provider->cities_id = $request->cities_id;
         $provider->email = $request->email;
         $provider->phone_number = $request->phone_number;
+
         $provider->save();
+
+        if ( $request->hasFile('profile_picture') && $request->file('profile_picture')->isValid()){
+        //
+            $file = $request->file('profile_picture');
+            $extension = $file->getClientOriginalExtension();
+            $img = 'profile_'.$provider->id.'.'.$extension;
+            Image::make($file)->save(public_path('/profiles/'.$img));
+            $provider->profile_picture = $img;
+        }
+
+        $provider->save();
+
+        return response()->json(['succes'=> true]);
     }
 
     /**
@@ -109,6 +146,7 @@ class ProviderController extends Controller
     public function show(provider $provider)
     {
         //
+        return $provider;
     }
 
     /**
@@ -175,10 +213,22 @@ class ProviderController extends Controller
      */
 
         $provider = provider::find($id);
+
+
+        if ( $request->hasFile('profile_picture') && $request->file('profile_picture')->isValid()){
+          @unlink(public_path('/profiles/'.$provider->profile_picture));
+          
+          $file = $request->file('profile_picture');
+          $extension = $file->getClientOriginalExtension();
+          $img = 'image_'.$provider->id.'.'.$extension;
+          Image::make($file)->save(public_path('/profiles/'.$img));
+          $provider->profile_picture =  $img;
+       }
         $provider->name = $request->name;
         $provider->email = $request->email;
         $provider->phone_number = $request->phone_number;
-        $provider->save();
+        
+        $provider->save(); 
 
         return response()->json(['succes'=>'modification effectuée avec succes'],200);
     }

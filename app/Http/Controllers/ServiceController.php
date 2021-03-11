@@ -22,20 +22,37 @@ class ServiceController extends Controller
     {
 
                 /**
- * @OA\Get(
- *     path="/api/service",
- *     tags={"service"},
- *     summary="return a list of services",
- *     description="list of services",
- *     @OA\Response(response="200",
- *       description="a json array of services"),
- *     @OA\Schema(type="json", items="string"),
- *     
- * )
- */
+     * @OA\Get(
+     *     path="/api/service",
+     *     tags={"service"},
+     *     summary="return a list of services",
+     *     description="list of services",
+     *     @OA\Response(response="200",
+     *       description="a json array of services"),
+     *     @OA\Schema(type="json", items="string"),
+     *     
+     * )
+     */
         $service = service::with(['categorie'])->orderBy('id', 'DESC')->paginate(8);
-        return  $service->toJson(JSON_PRETTY_PRINT);
+         return   $this->reply(true,null, $service);
         }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filterServiceByCategorie(Request $request, $uuid)
+    {
+        $service = null ;
+        if ($uuid)
+            $service = service::whereHas('categorie', function($q) use ($uuid) {
+                $q->where('id', $uuid); 
+            })->with(['categorie'])->orderBy('id', 'DESC')->paginate(8);
+        else
+             $service = service::with(['categorie'])->orderBy('id', 'DESC')->paginate(8);
+        return  $service->toJson(JSON_PRETTY_PRINT);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -48,6 +65,8 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:30',
             'image' => 'required',
+            'icon' => 'required',
+            'categorie_id' => 'required',
         ]);
   /**
      * @OA\Post(
@@ -95,34 +114,32 @@ class ServiceController extends Controller
      *   ),
      * )
      */
-        $categorie = categorie::find($request->input('categorie_id'));
-
+        
         $service = new service;
         
-        
         $service->name = $request->name;
-        #$service->service_request_id = $request->service_request_id;
         $service->categorie_id  = $request->categorie_id;
         $service->minimal_price = $request->minimal_price;
-        $service->image = 'image.jpeg';
-        $service->icon = 'icon.jpeg'; 
+        $service->image = "default.jpeg";
+        $service->icon = "default.jpeg";
+        
         $service->save();
 
 
-        // $file = $request->file('image');
-        // $extension = $file->getClientOriginalExtension();
-        // $img = 'image_'.$service->id.'.'.$extension;
-        // Image::make($file)->save(public_path('/images/'.$img));
-        // $service->image = $img;
-        // $service->save();
+        $file = $request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        $img = 'image_'.$service->id.'.'.$extension;
+        Image::make($file)->save(public_path('/images/'.$img));
+        $service->image = $img;
+        $service->save();
 
-        // $icon = $request->file('icon');
-        // $extension = $icon->getClientOriginalExtension();
-        // $icn = 'icon_'.$service->id.'.'.$extension;
-        // Image::make($file)->save(public_path('/icons/'.$icn));
-        // $service->icon = $icn; 
+        $icon = $request->file('icon');
+        $extension = $icon->getClientOriginalExtension();
+        $icn = 'icon_'.$service->id.'.'.$extension;
+        Image::make($file)->save(public_path('/icons/'.$icn));
+        $service->icon = $icn; 
         
-        // $service->save();
+        $service->save();
 
         return response()->jSon( [ 'success'=>'created'],200);
     }
@@ -196,7 +213,7 @@ class ServiceController extends Controller
      *   ),
      * )
      */
-        $service = Service::find($id);
+        
 
         if($request->file('image')){
           @unlink(public_path('/images/'.$service->image));

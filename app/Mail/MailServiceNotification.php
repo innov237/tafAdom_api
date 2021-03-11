@@ -16,9 +16,11 @@ class MailServiceNotification extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $detail;
+    
+    public function __construct($details)
     {
-        //
+        $this->detail = $details;
     }
 
     /**
@@ -28,7 +30,7 @@ class MailServiceNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail from TafAdom.com')
+        return $this->subject($this->detail['title'])
                     ->view('emails.notification');
     }
 }

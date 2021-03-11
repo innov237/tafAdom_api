@@ -28,7 +28,12 @@ class ServiceRequestController extends Controller
          */
 
         $sr = service_request::with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
-        return  $sr->toJson(JSON_PRETTY_PRINT);
+        return   $this->reply(true,null, $sr);
+        }
+
+        public function getUserService(){
+                $userService = service_request::with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->where("user_id",auth()->id)->orderBy('id', 'DESC')->paginate(8);
+                return   $this->reply(true,null, $userService);
         }
 
 
@@ -60,6 +65,43 @@ class ServiceRequestController extends Controller
 
             $sr = service_request::whereHas('serviceUser', function($q) use ($uuid) {
                         $q->where('id', $uuid);
+                })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+            
+            return  $sr->toJson(JSON_PRETTY_PRINT);
+            
+
+        }
+
+        public function filterCommandByProvider(Request $request, $uuid, $status = null)
+        {   
+
+            if ($status && $status>=1 && $status <=3){
+                $sr = null;
+                
+                if ( 3 == $status){
+                    $sr = service_request::whereHas('serviceProcessing', function($q) use ($uuid) {
+                            $q->where('provider_id', $uuid);
+                    })
+                    ->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+                }else{
+                    $sr = service_request::whereHas('serviceProcessing', function($q) use ($status, $uuid) {
+                            $q->where([
+                                ['status', $status],
+                                ['provider_id', $uuid]
+                            ]);
+                    })
+                    ->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
+                }   
+                
+            
+                return  $sr->toJson(JSON_PRETTY_PRINT);
+            }
+
+            $sr = service_request::whereHas('serviceProcessing', function($q) use ($uuid) {
+                        $q->where([
+                            ['delivery_services_requests.provider_id', $uuid],
+
+                        ]);
                 })->with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
             
             return  $sr->toJson(JSON_PRETTY_PRINT);

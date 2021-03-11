@@ -23,6 +23,9 @@ class ServiceRequestSeed extends Seeder
                 "delivery_address_id" => rand(1,15),
                 "service_id" => rand(1,15),
                 "time_solicitation" => $faker->unixTime(),
+                "solicitation_hour" => $faker->unixTime(),
+                "days_remaining" => $faker->unixTime(),
+
             ]);
         }
     }

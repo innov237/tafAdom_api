@@ -21,8 +21,8 @@ class ServiceSeeder extends Seeder
                 "name" => $faker->unique()->firstName,
                 "icon" => "default.jpeg",
                 "image" => "default.jpeg",
-                "minimal_price" => rand(1000, 150000),
-                "categorie_id" => rand(1,15),
+                "minimal_price" => rand(1000, 150000),               
+                "provider_id" => rand(1,15),
                 
             ]);
         }

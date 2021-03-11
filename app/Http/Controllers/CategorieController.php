@@ -10,9 +10,6 @@ use Image;
 class CategorieController extends Controller
 {   
 
-    public function __construct() {
-        $this->middleware('admin.verify', ['only' => ['index']]);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -21,19 +18,28 @@ class CategorieController extends Controller
     public function index()
     {
         /**
- * @OA\Get(
- *     path="/api/categorie",
- *     tags={"categories"},
- *     summary="return a list of categories",
- *     description="list of categories",
- *     @OA\Response(response="200",
- *       description="a json array of categories"),
- *     @OA\Schema(type="json", items="string"),
- *
- * )
- */
+         * @OA\Get(
+         *     path="/api/categorie",
+         *     tags={"categories"},
+         *     summary="return a list of categories",
+         *     description="list of categories",
+         *     @OA\Response(response="200",
+         *       description="a json array of categories"),
+         *     @OA\Schema(type="json", items="string"),
+         *
+         * )
+        */
 
         $categorie = categorie::with(['service'])->orderBy('id', 'DESC')->paginate(8);
+        return $this->reply(true,null, $categorie);
+    }
+
+     public function filterCategoryByService(Request $request, $service)
+    {
+        
+        $categorie = categorie::whereHas('service', function($q) use ($service){
+            $q->where('id', $service);
+        })->with(['service'])->orderBy('id', 'DESC')->paginate(8);
         return $this->reply(true,null, $categorie);
     }
 
@@ -48,6 +54,7 @@ class CategorieController extends Controller
         $this->validate($request,[
             'name'=>'required|string|max:30',
             'image'=>'required',
+            'icon'=>'required',
         ]);
         /**
          * @OA\Post(
@@ -95,24 +102,24 @@ class CategorieController extends Controller
          */
 
         $categorie = new categorie;
-        
-        $categorie->name = $request->name;    
 
-       $file = $request->file('icon');
-       $extension = $file->getClientOriginalExtension();
-       $icn = 'icon_'.$categorie->id.'.'.$extension;
-       Image::make($file)->resize(122,122)->save(public_path('/icons/'.$icn));
-       $categorie->icon = $icn;
+        $categorie->name = $request->name;
+        $categorie->image = "default.jpeg";
+        $categorie->icon = "default.jpeg";    
+        $categorie->save();
+       
+        $file = $request->file('icon');
+        $extension = $file->getClientOriginalExtension();
+        $icn = 'icon_'.$categorie->id.'.'.$extension;
+        Image::make($file)->resize(122,122)->save(public_path('/icons/'.$icn));
+        $categorie->icon = $icn;
 
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
         $img = 'image_'.$categorie->id.'.'.$extension;
         Image::make($file)->save(public_path('/images/'.$img));
         $categorie->image = $img;
-        $categorie->save();
-
-   
-
+        
         $categorie->save();
 
         return $this->reply(true,"bien enregistré",null);
@@ -140,7 +147,6 @@ class CategorieController extends Controller
     public function update(Request $request, $id)
     {
        
-      return response()->json(['name' => request('name') , 'data'=> $categorie]);
     /**
      * @OA\Patch(
      *   path="/api/categorie/{categorie} ",
