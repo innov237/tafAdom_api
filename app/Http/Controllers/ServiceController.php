@@ -34,7 +34,7 @@ class ServiceController extends Controller
      * )
      */
         $service = service::with(['categorie'])->orderBy('id', 'DESC')->paginate(8);
-        return  $service->toJson(JSON_PRETTY_PRINT);
+         return   $this->reply(true,null, $service);
         }
 
     /**

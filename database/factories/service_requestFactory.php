@@ -27,7 +27,9 @@ class service_requestFactory extends Factory
             "user_id" => rand(1,30),
             "delivery_address_id" => rand(1,30),
             "service_id" => rand(1,30),
-            "time_solicitation" => $this->faker->unixTime(),
+            "time_solicitation" => $this->faker->Time(),
+            "solicitation_hour" => $this->faker->Time(),
+            "days_remaining" => rand(1,30),
         ]; 
     }
 }

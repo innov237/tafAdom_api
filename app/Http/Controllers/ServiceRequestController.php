@@ -28,7 +28,12 @@ class ServiceRequestController extends Controller
          */
 
         $sr = service_request::with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->orderBy('id', 'DESC')->paginate(8);
-        return  $sr->toJson(JSON_PRETTY_PRINT);
+        return   $this->reply(true,null, $sr);
+        }
+
+        public function getUserService(){
+                $userService = service_request::with(['serviceUser' ,'serviceAsk', 'delivryAddress', 'serviceProcessing'])->where("user_id",auth()->id)->orderBy('id', 'DESC')->paginate(8);
+                return   $this->reply(true,null, $userService);
         }
 
 

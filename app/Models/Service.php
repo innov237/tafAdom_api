@@ -33,5 +33,9 @@ class service extends Model
     {
         return $this->belongsTo(categorie::class);
     }
+
+    public function provider()
+    {
+        return $this->belongsTo(provider::class);
+    }
 }
- 

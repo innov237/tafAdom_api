@@ -38,7 +38,8 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->createNewToken($token);
+        $this->createNewToken($token);
+        return  $this->reply(true,"bien connecté",null);
     }
 
     /**
@@ -64,8 +65,9 @@ class AuthController extends Controller
         if (auth()->user()->role->rank < 100)
             return response()->json(['error' => 'Only admin are authorize'], 401);
 
-
-        return $this->createNewToken($token);
+            $this->createNewToken($token);
+        return $this->reply(true,"bien connecté",null);
+        
     }
 
     /**
@@ -91,11 +93,11 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'residence' => $request->residence,
                     'telephone' => $request->telephone,
-                    'cities_id' => $request->cities_id,                                                            
+                    'cities_id' => 1,                                                            
                     ]
                 ));
 
-        return$this->reply(true,"bien enregistré",null);
+        return $this->reply(true,"compte créé avec succes",null);
     }
 
 
